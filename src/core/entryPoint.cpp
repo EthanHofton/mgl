@@ -1,4 +1,4 @@
-#include <entryPoint.hpp>
+#include <mgl/core/entryPoint.hpp>
 
 #include <iostream>
 
