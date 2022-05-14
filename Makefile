@@ -19,7 +19,7 @@ dirs:
 libs:
 
 $(PROGRAM): $(OBJ)
-	$(CC) -shared -o $(BIN)/$(PROGRAM).so $^ $(LDFLAGS)
+	$(CC) -dynamiclib -o $(BIN)/$(PROGRAM).dylib -install_name @rpath/mgl/$(BIN)/$(PROGRAM).dylib $^ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS) 
