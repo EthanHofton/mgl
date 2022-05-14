@@ -2,7 +2,7 @@ CC = c++
 
 CXXFLAGS = -Wall -std=c++17 -stdlib=libc++
 CXXFLAGS += -Iinclude/
-LDFLAGS = 
+LDFLAGS = -F lib/SDL2/ -framework SDL2 -rpath "$(shell pwd)"/lib/SDL2/
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(SRC:.cpp=.o)
