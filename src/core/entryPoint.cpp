@@ -4,7 +4,11 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "TESTING" << std::endl;
+    mgl::CORE_INFO("MGL STARTUP");
+
+    mgl::CORE_INFO("MGL RUNTIME");
+
+    mgl::CORE_INFO("MGL CLEANUP");
     
     return EXIT_SUCCESS;
 }
