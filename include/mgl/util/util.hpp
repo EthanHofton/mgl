@@ -10,8 +10,60 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
+#include <fstream>
+#include <cassert>
+#include <string>
+#include <rapidjson/document.h>
+
+using namespace rapidjson;
+
 namespace mgl
 {
+    class Config
+    {
+    public:
+        // * static create and delete functions       
+        static Config* instance();
+        static void release();
+        
+    private:
+        
+        // * private constructo and destructor
+        Config();
+        ~Config() = default;
+        
+    public:
+
+        // * return the logger config json document
+        inline Document &getLoggerConifg() { return m_loggerConifg; }
+        // * return the game config json document
+        inline Document &getGameConifg() { return m_gameConfig; }
+        
+        // * fequetly used varibles
+        inline int getWidth() { return m_gameConfig["width"].GetInt(); }
+        inline int getHeight() { return m_gameConfig["height"].GetInt(); }
+        
+    private:
+        
+        // * private read file function
+        std::string getFile(std::string t_filename);
+        
+    private:
+        
+        // * static instance
+        static Config* s_instance;
+        
+        // * logger config document
+        Document m_loggerConifg;
+        // * game config document
+        Document m_gameConfig;
+    };
+
+    // * config macros
+    #define CONFIG() mgl::Config::instance()
+    #define LOGGER_CONFIG() mgl::Config::instance()->getLoggerConifg()
+    #define GAME_CONFIG() mgl::Config::instance()->getGameConifg()
+
     class Logger
     {
     public:
