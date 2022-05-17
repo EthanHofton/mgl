@@ -1,3 +1,5 @@
 src/*.o
+src/**/*.o
 .vscode/
 bin/
+include/GL/

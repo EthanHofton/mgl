@@ -17,6 +17,12 @@ dirs:
 	mkdir -p ./$(BIN)
 
 libs:
+ifeq ($(wildcard include/GL/.*),)
+	@echo "creating include/GL"
+	cd lib/glew/auto && make && cd .. && make && make install
+	mkdir -p include/GL/
+	cp -a lib/glew/include/GL/. include/GL/
+endif
 
 $(PROGRAM): $(OBJ)
 	$(CC) -dynamiclib -o $(BIN)/$(PROGRAM).dylib -install_name @rpath/$(PROGRAM).dylib $^ $(LDFLAGS)
