@@ -3,6 +3,7 @@ CC = c++
 CXXFLAGS = -Wall -std=c++17 -stdlib=libc++
 CXXFLAGS += -Iinclude/
 LDFLAGS = -F lib/SDL2/ -framework SDL2 -rpath "$(shell pwd)"/lib/SDL2/
+LDFLAGS += -framework OpenGL
 
 SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
 OBJ = $(SRC:.cpp=.o)
