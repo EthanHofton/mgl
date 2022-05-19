@@ -51,10 +51,8 @@ namespace mgl
         unsigned int m_vao;
         
         bool m_isRunning;
-    };
 
-    // Window *createWindow();
-    Window* createWindow() { return nullptr; }
+    };
 }
 
 #endif
