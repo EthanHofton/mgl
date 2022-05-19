@@ -6,6 +6,7 @@
 #include "graphics.hpp"
 #include "timer.hpp"
 #include "page.hpp"
+#include "inputManager.hpp"
 #include "../util/util.hpp"
 
 namespace mgl
@@ -48,7 +49,7 @@ namespace mgl
         std::vector<Page*> m_pages;
         
         float m_frameRate;
-        // InputManager *m_inputManager;
+        InputManager *m_inputManager;
         unsigned int m_vao;
         
         bool m_isRunning;

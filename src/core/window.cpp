@@ -17,7 +17,7 @@ namespace mgl
         m_timerInstance = Timer::instance();
         
         m_frameRate = (float)(GAME_CONFIG()["fps"].GetInt());
-        // m_inputManager = InputManager::instance();
+        m_inputManager = InputManager::instance();
 
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
@@ -33,8 +33,8 @@ namespace mgl
         Timer::release();
         m_timerInstance = nullptr;
         
-        // InputManager::release();
-        // m_inputManager = nullptr;
+        InputManager::release();
+        m_inputManager = nullptr;
 
         glDeleteBuffers(1, &m_vao);
         
@@ -93,7 +93,7 @@ namespace mgl
                 while (m_graphicsInstance->pollEvent())
                 {
                     ImGui_ImplSDL2_ProcessEvent(&m_graphicsInstance->getEvent());
-                    // m_inputManager->giveEvents(m_graphicsInstance->getEvent());
+                    m_inputManager->giveEvents(m_graphicsInstance->getEvent());
                     
                     if (m_activePage != nullptr)
                     {
@@ -125,7 +125,7 @@ namespace mgl
     void Window::earlyUpdate()
     {
         m_timerInstance->reset();
-        // m_inputManager->update();
+        m_inputManager->update();
     }
 
     void Window::update()
@@ -139,7 +139,7 @@ namespace mgl
 
     void Window::lateUpdate()
     {
-        // m_inputManager->updatePrevInput();
+        m_inputManager->updatePrevInput();
     }
     
     void Window::draw()
