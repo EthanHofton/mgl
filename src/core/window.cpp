@@ -13,7 +13,7 @@ namespace mgl
         
         Config::instance();
         
-        // m_activePage = nullptr;
+        m_activePage = nullptr;
         m_timerInstance = Timer::instance();
         
         m_frameRate = (float)(GAME_CONFIG()["fps"].GetInt());
@@ -38,14 +38,14 @@ namespace mgl
 
         glDeleteBuffers(1, &m_vao);
         
-        // for (auto page : m_pageStack)
-        // {
-        //     page->onDelete();
-        //     delete page;
-        //     page = nullptr;
-        // }
+        for (auto page : m_pages)
+        {
+            page->onDelete();
+            delete page;
+            page = nullptr;
+        }
         
-        // m_activePage = nullptr;
+        m_activePage = nullptr;
         
         // * make sure all entites are deleted
         // entity::Entity::deleteAllEntities();
@@ -58,28 +58,28 @@ namespace mgl
     void Window::setActivePage(std::string t_pageId)
     {
         CORE_INFO("setting active page with id: {0}", t_pageId);
-        // m_activePage = Page::s_allPages[t_pageId];
+        m_activePage = Page::s_pages[t_pageId];
     }
 
-    // void Window::addPage(Page *t_page)
-    // {
-    //     t_page->onCreate();
+    void Window::addPage(Page *t_page)
+    {
+        t_page->onInit();
         
-    //     if (m_activePage == nullptr)
-    //     {
-    //         m_activePage = t_page;
-    //     }
+        if (m_activePage == nullptr)
+        {
+            m_activePage = t_page;
+        }
         
-    //     CORE_INFO("adding page with id '{0}'", t_page->getPageID());
-    //     m_pageStack.push_back(t_page);
-    // }
+        CORE_INFO("adding page with id '{0}'", t_page->getPageId());
+        m_pages.push_back(t_page);
+    }
 
     void Window::addPage(std::string t_pageId)
     {
-        // if (Page::s_allPages[t_pageId] != nullptr)
-        // {
-        //     addPage(Page::s_allPages[t_pageId]);
-        // }
+        if (Page::s_pages[t_pageId] != nullptr)
+        {
+            addPage(Page::s_pages[t_pageId]);
+        }
     }
 
     void Window::run()
@@ -95,10 +95,10 @@ namespace mgl
                     ImGui_ImplSDL2_ProcessEvent(&m_graphicsInstance->getEvent());
                     // m_inputManager->giveEvents(m_graphicsInstance->getEvent());
                     
-                    // if (m_activePage != nullptr)
-                    // {
-                    //     m_activePage->onEvent(m_graphicsInstance->getEvent());
-                    // }
+                    if (m_activePage != nullptr)
+                    {
+                        m_activePage->onEvent(m_graphicsInstance->getEvent());
+                    }
                     
                     if (m_graphicsInstance->getEvent().type == SDL_QUIT)
                     {
@@ -130,11 +130,11 @@ namespace mgl
 
     void Window::update()
     {
-        // if (m_activePage != nullptr)
-        // {
-        //     m_activePage->onUpdate();
-        //     m_activePage->updateEntities();
-        // }
+        if (m_activePage != nullptr)
+        {
+            m_activePage->onUpdate();
+            // m_activePage->updateEntities();
+        }
     }
 
     void Window::lateUpdate()
@@ -151,10 +151,10 @@ namespace mgl
         m_graphicsInstance->screenClear();
         m_graphicsInstance->screenClearColor();
         
-        // if (m_activePage != nullptr)
-        // {
-        //     m_activePage->onDraw();
-        // }
+        if (m_activePage != nullptr)
+        {
+            m_activePage->onDraw();
+        }
         
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

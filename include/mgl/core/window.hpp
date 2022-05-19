@@ -5,6 +5,7 @@
 
 #include "graphics.hpp"
 #include "timer.hpp"
+#include "page.hpp"
 #include "../util/util.hpp"
 
 namespace mgl
@@ -14,18 +15,18 @@ namespace mgl
     public:
 
         // * window constructpr
-        Window(std::string t_title);
+        Window(std::string);
         ~Window();
         
         // * window run function (main game loop)
         void run();
 
         // * set the active page the window is rendering and updating
-        void setActivePage(std::string t_pageId);
+        void setActivePage(std::string);
         // * add a page via page pointer to the window
-        // void addPage(Page *t_page);
+        void addPage(Page *);
         // * add a page via page id to the window
-        void addPage(std::string t_pageId);
+        void addPage(std::string);
 
     private:
 
@@ -40,11 +41,11 @@ namespace mgl
 
     private:
             
-        // Page* m_activePage;
+        Page* m_activePage;
         Graphics *m_graphicsInstance;
         Timer *m_timerInstance;
         
-        // std::vector<Page*> m_pageStack;
+        std::vector<Page*> m_pages;
         
         float m_frameRate;
         // InputManager *m_inputManager;
