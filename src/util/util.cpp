@@ -33,6 +33,14 @@ namespace mgl
         m_loggerConifg.Parse(getFile(loggerConfigFile).c_str());
         m_gameConfig.Parse(getFile(gameConfigFile).c_str());
     }
+
+    Config::~Config()
+    {
+        spdlog::drop("CORE_CONSOLE");
+        spdlog::drop("CORElogs/core.log");
+        spdlog::drop("APP_CONSOLE");
+        spdlog::drop("APPlogs/app.log");
+    }
     
     std::string Config::getFile(std::string t_filename)
     {

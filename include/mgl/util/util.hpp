@@ -30,7 +30,7 @@ namespace mgl
         
         // * private constructo and destructor
         Config();
-        ~Config() = default;
+        ~Config();
         
     public:
 
