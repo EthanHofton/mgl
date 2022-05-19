@@ -2,6 +2,12 @@
 
 #include <iostream>
 
+mgl::Window *mgl::createWindow()
+{
+    mgl::Window *w= new mgl::Window("test");
+    return w;
+}
+
 int main(int argc, char** argv)
 {
     CORE_INFO("MGL STARTUP");
