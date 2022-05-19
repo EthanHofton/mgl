@@ -53,7 +53,8 @@ namespace mgl
         bool m_isRunning;
     };
 
-    Window *createWindow();
+    // Window *createWindow();
+    Window* createWindow() { return nullptr; }
 }
 
 #endif
