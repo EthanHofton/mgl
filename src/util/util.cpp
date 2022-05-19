@@ -37,9 +37,9 @@ namespace mgl
     Config::~Config()
     {
         spdlog::drop("CORE_CONSOLE");
-        spdlog::drop("CORElogs/core.log");
+        spdlog::drop("CORE");
         spdlog::drop("APP_CONSOLE");
-        spdlog::drop("APPlogs/app.log");
+        spdlog::drop("APP");
     }
     
     std::string Config::getFile(std::string t_filename)
