@@ -14,43 +14,51 @@ namespace mgl
 
     void Scene::imguiInspector()
     {
-        // * open new imgui window
-        ImGui::Begin(getEntityId().c_str());
+        // // * open new imgui window
+        // ImGui::Begin(getEntityId().c_str());
 
-        // * begin tab bar
-        if (ImGui::BeginTabBar("MyTabBar"))
-        {
-            // * begin scene graph tab
-            if (ImGui::BeginTabItem("Scene Graph"))
-            {
-                // * create a new tree with this scene as the starting node
-                if (ImGui::TreeNode(getEntityId().c_str()))
-                {
-                    for (auto child : getChildren())
-                    {
-                        imguiChildTree(child);
-                    }
+        // // * begin tab bar
+        // if (ImGui::BeginTabBar("MyTabBar"))
+        // {
+        //     // * begin scene graph tab
+        //     if (ImGui::BeginTabItem("Scene Graph"))
+        //     {
+        //         // * create a new tree with this scene as the starting node
+        //         if (ImGui::TreeNode(getEntityId().c_str()))
+        //         {
+        //             for (auto child : getChildren())
+        //             {
+        //                 imguiChildTree(child);
+        //             }
                     
 
-                    ImGui::TreePop();
-                }
+        //             ImGui::TreePop();
+        //         }
 
 
-                // * end scene graph tab
-                ImGui::EndTabItem();
-            }
+        //         // * end scene graph tab
+        //         ImGui::EndTabItem();
+        //     }
 
-            if (ImGui::BeginTabItem("Other thing"))
-            {
-                ImGui::EndTabItem();
-            }
+        //     if (ImGui::BeginTabItem("Other thing"))
+        //     {
+        //         ImGui::EndTabItem();
+        //     }
 
-            // * close tab bar
-            ImGui::EndTabBar();
-        }
+        //     // * close tab bar
+        //     ImGui::EndTabBar();
+        // }
         
 
-        // * close imgui window
+        // // * close imgui window
+        // ImGui::End();
+
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos : viewport->Pos);
+        ImGui::SetNextWindowSize(viewport->WorkSize : viewport->Size);
+
+        ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
+        ImGui::Begin("Example: Fullscreen window", flags);
         ImGui::End();
     }
 
