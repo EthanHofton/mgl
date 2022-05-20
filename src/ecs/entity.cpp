@@ -67,7 +67,7 @@ namespace mgl
         if (hasParent())
         {
             // getEntity<Entity>(m_parent)->addChild(getEntityId());
-            CORE_DEBUG("{}", getEntity<Entity>(m_parent)->getEntityId());
+            CORE_DEBUG("{}", getEntity<Entity>(m_parent));
         }
 
         CORE_INFO("entity with id '{}' set entity with id '{}' as parent", m_entityId, m_parent);
