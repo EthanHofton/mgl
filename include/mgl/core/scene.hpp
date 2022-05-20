@@ -22,7 +22,7 @@ namespace mgl
     protected:
 
         // * page constructor and destructor
-        Scene(Window *, std::string);
+        Scene(std::string, Window *);
         virtual ~Scene();
 
     public:

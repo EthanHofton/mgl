@@ -4,7 +4,7 @@ namespace mgl
 {
     std::vector<std::string> Scene::s_scenes;
 
-    Scene::Scene(Window *t_window, std::string t_entityId) : Entity(t_entityId), m_parent(t_window)
+    Scene::Scene(std::string t_entityId, Window *t_window) : Entity(t_entityId), m_parent(t_window)
     {
         s_scenes.push_back(getEntityId());
         active(false);

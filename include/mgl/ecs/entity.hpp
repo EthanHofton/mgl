@@ -16,6 +16,7 @@ namespace mgl
     // * when creating derrived entity class ensure to:
     // *    - make the construcor and destructor private or protected (private for finial class)
     // *    - add the line 'friend class Entity' as the first line of the class defintion
+    // *    - ensure that the first argument of the custructor is the entity id
     class Entity
     {
     public:
@@ -23,8 +24,8 @@ namespace mgl
         // * reference entity using ids instead of pointers
 
         // * static create entity function. removes 'new' keyword from user
-        template<typename T>
-        static T* createEntity(std::string t_entityId)
+        template<typename T, typename... Args>
+        static T* createEntity(std::string t_entityId, Args... args)
         {
             if (!(std::is_base_of_v<Entity, T>))
             {
@@ -41,7 +42,7 @@ namespace mgl
                 throw std::runtime_error("Entity ids must be unqiue");
             }
 
-            T* new_e = new T(t_entityId);
+            T* new_e = new T(t_entityId, args...);
             s_entites[t_entityId] = new_e;
             return new_e;
         }
