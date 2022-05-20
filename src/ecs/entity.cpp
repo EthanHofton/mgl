@@ -131,7 +131,7 @@ namespace mgl
             return {};
         }
 
-        std::vector<std::string> v1 = {};
+        std::vector<std::string> v1 = { m_parent };
         std::vector<std::string> v2 = getEntity<Entity>(m_parent)->getAncestors();
         v1.insert(v1.end(), v2.begin(), v2.end());
         return v1;
