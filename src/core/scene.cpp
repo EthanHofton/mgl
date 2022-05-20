@@ -56,7 +56,7 @@ namespace mgl
 
     void Scene::imguiChildTree(std::string t_child)
     {
-        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_SpanFullWidth;
+        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_SpanAvailWidth;
         if (!Entity::getEntity<Entity>(t_child)->hasChildren())
         {
             treeFlags |= ImGuiTreeNodeFlags_Leaf;
@@ -64,9 +64,6 @@ namespace mgl
 
         if (ImGui::TreeNodeEx(t_child.c_str(), treeFlags))
         {
-            ImGui::SameLine();
-            ImGui::SmallButton("Inspect");
-
             for (auto child : Entity::getEntity<Entity>(t_child)->getChildren())
             {
                 imguiChildTree(child);
@@ -74,5 +71,7 @@ namespace mgl
 
             ImGui::TreePop();
         }
+        ImGui::SameLine();
+        ImGui::SmallButton("Inspect");
     }
 }
