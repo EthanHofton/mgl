@@ -17,5 +17,6 @@ namespace mgl
     Entity::Entity(std::string t_entityId)
     {
         m_entityId = t_entityId;
+        CORE_INFO("Entity with id '{}' created", m_entityId);
     }
 }
