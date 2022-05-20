@@ -67,7 +67,8 @@ namespace mgl
         if (hasParent())
         {
             CORE_DEBUG("TERST");
-            getEntity<Entity>(m_parent)->addChild(getEntityId());
+            // getEntity<Entity>(m_parent)->addChild(getEntityId());
+            getEntity<Entity>(m_parent);
             CORE_DEBUG("TERST");
         }
 
