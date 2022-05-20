@@ -58,7 +58,8 @@ namespace mgl
         ImGui::SetNextWindowSize(viewport->WorkSize : viewport->Size);
 
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
-        ImGui::Begin("Example: Fullscreen window", flags);
+        bool open = true;
+        ImGui::Begin("Example: Fullscreen window", &open, flags);
         ImGui::End();
     }
 
