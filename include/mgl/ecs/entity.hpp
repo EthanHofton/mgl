@@ -9,6 +9,9 @@
 
 namespace mgl
 {
+    // * scene forward delcare
+    class Scene;
+
     // * entity class
     // * to create a new entity use Entity::createEntity<>
     // * to delete an entity use Entity::deleteEntity<>
@@ -43,9 +46,17 @@ namespace mgl
             }
 
             T* new_e = new T(t_entityId, args...);
-            s_entites[t_entityId] = new_e;
-
             CORE_INFO("Entity with id '{}' created", t_entityId);
+
+            s_entites[t_entityId] = new_e;
+            
+            // * if the type of entity is scene
+            // *    call on init
+            if (std::is_same_v(Scene, T))
+            {
+                new_e->onInit();
+            }
+
             return new_e;
         }
 

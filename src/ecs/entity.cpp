@@ -21,13 +21,14 @@ namespace mgl
         {
             deleteStack.push(entity.second);
         }
-        s_entites.clear();
 
         while (!deleteStack.empty())
         {
             delete deleteStack.top();
             deleteStack.pop();
         }
+
+        s_entites.clear();
     }
 
     std::vector<std::string> Entity::getAllEntites()

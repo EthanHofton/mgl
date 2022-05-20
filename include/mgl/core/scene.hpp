@@ -33,6 +33,8 @@ namespace mgl
         inline virtual void onDraw() {}
         // * page on event. gets called whenever an event is triggered
         inline virtual void onEvent(SDL_Event &t_e) {}
+        // * page on init. gets called right after the constructor
+        inline virtual void onInit() {}
 
         // * get the parent window pointer
         inline Window* getWindow() { return m_parent; }
