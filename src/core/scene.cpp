@@ -54,7 +54,7 @@ namespace mgl
         ImGui::End();
     }
 
-    void imguiChildTree(std::string t_child)
+    void Scene::imguiChildTree(std::string t_child)
     {
         if (ImGui::TreeNode(t_child.c_str()))
         {
