@@ -60,6 +60,7 @@ namespace mgl
         if (!Entity::getEntity<Entity>(t_child)->hasChildren())
         {
             treeFlags |= ImGuiTreeNodeFlags_Leaf;
+            treeFlags |= ImGuiTreeNodeFlags_Bullet;
         }
 
         bool nodeOpen = ImGui::TreeNodeEx(t_child.c_str(), treeFlags);
