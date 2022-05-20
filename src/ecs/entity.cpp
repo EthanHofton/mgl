@@ -76,12 +76,14 @@ namespace mgl
             getEntity<Entity>(m_parent)->removeChild(getEntityId());
         }
 
-        // assign the entity a new parent
-        // if the new parent is not null, add this as a child of the new parent
+        // * assign the entity a new parent
+        // * if the new parent is not null, add this as a child of the new parent
+        // *    also set the active state of the child to the parent
         m_parent = t_parent;
         if (hasParent())
         {
             getEntity<Entity>(m_parent)->addChild(getEntityId());
+            active(getEntity<Entity>(m_parent)->isActive());
         }
 
         CORE_INFO("entity with id '{}' set entity with id '{}' as parent", m_entityId, m_parent);
@@ -137,7 +139,8 @@ namespace mgl
 
     std::vector<std::string> Entity::getDescendantsPreOrder()
     {
-        std::vector<std::string> descendants = {getEntityId()};
+        std::vector<std::string> descendants = { getEntityId() };
+
         for (auto child : m_children)
         {
             std::vector<std::string> v2 = getEntity<Entity>(child)->getDescendantsPreOrder();
