@@ -143,7 +143,7 @@ namespace mgl
         inline virtual void onUpdate() {}
 
         // * entity appears in imgui inspector
-        virtual void imguiInspector();
+        IMGUI(virtual void imguiInspector();)
 
     private:
 
