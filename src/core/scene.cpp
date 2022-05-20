@@ -60,6 +60,13 @@ namespace mgl
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
         bool open = true;
         ImGui::Begin("Example: Fullscreen window", &open, flags);
+
+        ImGui::BeginChild("Test Child");
+
+        ImGui::Text("test");
+
+        ImGui::EndChild();
+
         ImGui::End();
     }
 
