@@ -5,6 +5,8 @@
 #include <map>
 #include <vector>
 
+#include <SDL2/SDL_events.h>
+
 #include "../util/util.hpp"
 
 namespace mgl
