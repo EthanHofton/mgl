@@ -12,8 +12,17 @@ namespace mgl
 
     Scene::~Scene() {}
 
-    void Scene::customImguiInspector()
+    void Scene::imguiInspector()
     {
-        
+        // * open new imgui window
+        ImGui::Begin(getEntityId().c_str());
+
+        if (ImGui::TreeNode("Scene Graph"))
+        {
+            ImGui::TreePop();
+        }
+
+        // * close imgui window
+        ImGui::End();
     }
 }
