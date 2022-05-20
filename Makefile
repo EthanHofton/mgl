@@ -1,10 +1,10 @@
 CC = c++
 
-TESTTEST = 1
+USE_IMGUI = 1
 
 CXXFLAGS = -Wall -std=c++17 -stdlib=libc++
 CXXFLAGS += -Iinclude/ 
-CXXFLAGS += -DUSE_IMGUI=$(TESTTEST)
+CXXFLAGS += -DUSE_IMGUI=$(USE_IMGUI)
 LDFLAGS = -F lib/SDL2/ -framework SDL2 -rpath "$(shell pwd)"/lib/SDL2/
 LDFLAGS += -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
 LDFLAGS += -framework OpenGL
