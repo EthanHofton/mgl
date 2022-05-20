@@ -164,6 +164,7 @@ namespace mgl
         {
             CORE_DEBUG("{}", child);
             std::vector<std::string> v2 = getDescendantsPreOrder();
+            CORE_DEBUG("v2 done");
             descendants.insert(descendants.end(), v2.begin(), v2.end());
         }
 
