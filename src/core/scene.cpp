@@ -12,7 +12,7 @@ namespace mgl
 
     Scene::~Scene() {}
 
-    IMGUI(void Scene::imguiInspector()
+    void Scene::imguiInspector()
     {
         // * open new imgui window
         ImGui::Begin(getEntityId().c_str());
@@ -52,9 +52,9 @@ namespace mgl
 
         // * close imgui window
         ImGui::End();
-    })
+    }
 
-    IMGUI(void Scene::imguiChildTree(std::string t_child)
+    void Scene::imguiChildTree(std::string t_child)
     {
         ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
         if (!Entity::getEntity<Entity>(t_child)->hasChildren())
@@ -72,5 +72,5 @@ namespace mgl
 
             ImGui::TreePop();
         }
-    })
+    }
 }

@@ -17,16 +17,6 @@
 
 using namespace rapidjson;
 
-// * set of macros
-// * used to deside weather to include the imgui code into the final build
-// * to compile with IMGUI, use -DUSE_IMGUI
-// * wrap all IMGUI code statements with IMGUI()
-#if (USE_IMGUI == 1)
-#define IMGUI(...) __VA_ARGS__
-#else
-#define IMGUI(...)
-#endif
-
 namespace mgl
 {
     class Config

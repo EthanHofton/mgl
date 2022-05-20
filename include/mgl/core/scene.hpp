@@ -30,11 +30,11 @@ namespace mgl
         // * get the parent window pointer
         inline Window* getWindow() { return m_parent; }
 
-        IMGUI(void imguiInspector() override;)
+        void imguiInspector() override;
 
     private:
 
-        IMGUI(void imguiChildTree(std::string t_child);)
+        void imguiChildTree(std::string t_child);
 
     private:
 
