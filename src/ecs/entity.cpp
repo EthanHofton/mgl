@@ -163,7 +163,7 @@ namespace mgl
         for (auto child : m_children)
         {
             CORE_DEBUG("{}", child);
-            std::vector<std::string> v2 = getDescendantsPreOrder();
+            std::vector<std::string> v2 = getEntity<Entity>(child)->getDescendantsPreOrder();
             CORE_DEBUG("v2 done");
             descendants.insert(descendants.end(), v2.begin(), v2.end());
         }
