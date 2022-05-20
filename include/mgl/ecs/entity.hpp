@@ -5,7 +5,7 @@
 #include <map>
 #include <vector>
 
-#include <SDL2/SDL_events.h>
+#include <SDL2/SDL.h>
 
 #include "../util/util.hpp"
 
