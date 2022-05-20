@@ -30,6 +30,17 @@ namespace mgl
         }
     }
 
+    std::vector<std::string> Entity::getAllEntites()
+    {
+        std::vector<std::string> allEntites;
+        for (auto entity : s_entites)
+        {
+            allEntites.push_back(entity.first);
+        }
+
+        return allEntites;
+    }
+
     Entity::Entity(std::string t_entityId)
     {
         m_entityId = t_entityId;
@@ -52,15 +63,27 @@ namespace mgl
 
         // assign the entity a new parent
         // if the new parent is not null, add this as a child of the new parent
-        // also set the activity of the child to the activiy of the parent
         m_parent = t_parent;
         if (hasParent())
         {
             getEntity<Entity>(m_parent)->addChild(getEntityId());
-            active(getEntity<Entity>(m_parent)->isActive());
         }
 
         CORE_INFO("entity with id '{}' set entity with id '{}' as parent", m_entityId, m_parent);
+    }
+
+    void Entity::activePropagate(bool t_active)
+    {
+        if (t_active == m_active)
+        {
+            return;
+        }
+
+        m_active = t_active;
+        for (auto child : m_children)
+        {
+            getEntity<Entity>(child)->activePropagate(m_active);
+        }
     }
 
     void Entity::removeChild(std::string t_childId)

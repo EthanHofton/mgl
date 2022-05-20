@@ -13,7 +13,7 @@ namespace mgl
         
         Config::instance();
         
-        m_activePage = nullptr;
+        m_activeScene = "";
         m_timerInstance = Timer::instance();
         
         m_frameRate = (float)(GAME_CONFIG()["fps"].GetInt());
@@ -38,48 +38,25 @@ namespace mgl
 
         glDeleteBuffers(1, &m_vao);
         
-        for (auto page : m_pages)
-        {
-            page->onDelete();
-            delete page;
-            page = nullptr;
-        }
-        
-        m_activePage = nullptr;
-        
         // * make sure all entites are deleted
-        // entity::Entity::deleteAllEntities();
+        Entity::deleteAllEntities();
         
         Logger::release();
         Config::release();
         
     }
 
-    void Window::setActivePage(std::string t_pageId)
+    void Window::setActiveScene(std::string t_entityId)
     {
-        CORE_INFO("setting active page with id: {0}", t_pageId);
-        m_activePage = Page::s_pages[t_pageId];
-    }
+        // * set the old scences activity to false
+        Entity::getEntity<Scene>(m_activeScene)->activePropagate(false);
 
-    void Window::addPage(Page *t_page)
-    {
-        t_page->onInit();
-        
-        if (m_activePage == nullptr)
-        {
-            m_activePage = t_page;
-        }
-        
-        CORE_INFO("adding page with id '{0}'", t_page->getPageId());
-        m_pages.push_back(t_page);
-    }
-
-    void Window::addPage(std::string t_pageId)
-    {
-        if (Page::s_pages[t_pageId] != nullptr)
-        {
-            addPage(Page::s_pages[t_pageId]);
-        }
+        // * log scene change
+        CORE_INFO("setting active scene with id: {0}", t_entityId);
+        // * set new active scene
+        m_activeScene = t_entityId;
+        // * set the new scence activity to true
+        Entity::getEntity<Scene>(m_activeScene)->activePropagate(true);
     }
 
     void Window::run()
@@ -95,9 +72,9 @@ namespace mgl
                     ImGui_ImplSDL2_ProcessEvent(&m_graphicsInstance->getEvent());
                     m_inputManager->giveEvents(m_graphicsInstance->getEvent());
                     
-                    if (m_activePage != nullptr)
+                    if (m_activeScene != "")
                     {
-                        m_activePage->onEvent(m_graphicsInstance->getEvent());
+                        Entity::getEntity<Scene>(m_activeScene)->onEvent(m_graphicsInstance->getEvent());
                     }
                     
                     if (m_graphicsInstance->getEvent().type == SDL_QUIT)
@@ -130,10 +107,26 @@ namespace mgl
 
     void Window::update()
     {
-        if (m_activePage != nullptr)
+        if (m_activeScene != "")
         {
-            m_activePage->onUpdate();
-            // m_activePage->updateEntities();
+            // * update scence first
+            Entity::getEntity<Scene>(m_activeScene)->update();
+
+            // * update other entites without scene
+            // * loop through all the entites in existance
+            // * update if the are not the scence and not active
+            for (auto entity : Entity::getAllEntites())
+            {
+                if (entity != m_activeScene)
+                {
+                    if (Entity::getEntity<Entity>(entity)->isActive())
+                    {
+                        // * proform an entity update if the entity is active
+                        Entity::getEntity<Entity>(entity)->update();
+                    }
+                }
+            }
+
         }
     }
 
@@ -151,9 +144,9 @@ namespace mgl
         m_graphicsInstance->screenClear();
         m_graphicsInstance->screenClearColor();
         
-        if (m_activePage != nullptr)
+        if (m_activeScene != "")
         {
-            m_activePage->onDraw();
+            Entity::getEntity<Scene>(m_activeScene)->onDraw();
         }
         
         ImGui::Render();

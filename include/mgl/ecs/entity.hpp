@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 #include "../util/util.hpp"
 
@@ -61,6 +62,9 @@ namespace mgl
             return reinterpret_cast<T*>(s_entites[t_entityId]);
         }
 
+        // * return a list with all the ids of all the entites in existence
+        static std::vector<std::string> getAllEntites();
+
     private:
 
         // * static map to store all of the entity pointers mapped to there corresponding ids
@@ -82,6 +86,8 @@ namespace mgl
         inline bool isActive() { return m_active; }
         // * entity active setter
         inline void active(bool t_active) { m_active = t_active; }
+        // * propagte activity to children
+        void activePropagate(bool);
 
         // * entity parent setter
         void parent(std::string);
@@ -100,6 +106,11 @@ namespace mgl
         // * virutal entity update function
         virtual inline void update() {}
 
+        // * entity appears in imgui inspector
+        void imguiInspector();
+        // * custom entity imgui properties
+        virtual void customImguiInspector() {}
+
     private:
 
         inline void addChild(std::string t_childId) { m_children.push_back(t_childId); }
@@ -110,15 +121,15 @@ namespace mgl
         // * store the entity id
         std::string m_entityId;
 
-        // * entity active property
-        bool m_active = true;
-
         // * entity parent
         // * "" = null parent
         std::string m_parent = "";
 
         // * list of entity children
         std::vector<std::string> m_children;
+
+        // * entity active property
+        bool m_active = true;
 
     };
 }
