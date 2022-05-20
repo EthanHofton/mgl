@@ -34,6 +34,10 @@ namespace mgl
 
     private:
 
+        void imguiChildTree(std::string t_child);
+
+    private:
+
         // * parent window pointer
         Window *m_parent;
     };

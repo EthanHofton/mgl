@@ -17,14 +17,26 @@ namespace mgl
         // * open new imgui window
         ImGui::Begin(getEntityId().c_str());
 
+        // * begin tab bar
         if (ImGui::BeginTabBar("MyTabBar"))
         {
+            // * begin scene graph tab
             if (ImGui::BeginTabItem("Scene Graph"))
             {
-                // if (ImGui::TreeNode("Scene Graph"))
-                // {
-                //     ImGui::TreePop();
-                // }
+                // * create a new tree with this scene as the starting node
+                if (ImGui::TreeNode(getEntityId().c_str()))
+                {
+                    for (auto child : getChildren())
+                    {
+                        imguiChildTree(child);
+                    }
+                    
+
+                    ImGui::TreePop();
+                }
+
+
+                // * end scene graph tab
                 ImGui::EndTabItem();
             }
 
@@ -33,11 +45,25 @@ namespace mgl
                 ImGui::EndTabItem();
             }
 
+            // * close tab bar
             ImGui::EndTabBar();
         }
         
 
         // * close imgui window
         ImGui::End();
+    }
+
+    void imguiChildTree(std::string t_child)
+    {
+        if (ImGui::TreeNode(t_child.c_str()))
+        {
+            for (auto child : Entity::getEntity<Entity>(t_child)->getChildren())
+            {
+                imguiChildTree(child);
+            }
+
+            ImGui::TreePop();
+        }
     }
 }
