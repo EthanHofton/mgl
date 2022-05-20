@@ -56,7 +56,7 @@ namespace mgl
 
     void Scene::imguiChildTree(std::string t_child)
     {
-        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_SpanAvailWidth;
+        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_None;
         if (!Entity::getEntity<Entity>(t_child)->hasChildren())
         {
             treeFlags |= ImGuiTreeNodeFlags_Leaf;
