@@ -17,10 +17,25 @@ namespace mgl
         // * open new imgui window
         ImGui::Begin(getEntityId().c_str());
 
-        if (ImGui::TreeNode("Scene Graph"))
+        if (ImGui::BeginTabBar("MyTabBar"))
         {
-            ImGui::TreePop();
+            if (ImGui::BeginTabItem("Scene Graph"))
+            {
+                // if (ImGui::TreeNode("Scene Graph"))
+                // {
+                //     ImGui::TreePop();
+                // }
+                ImGui::EndTabItem();
+            }
+
+            if (ImGui::BeginTabItem("Other thing"))
+            {
+                ImGui::EndTabItem();
+            }
+
+            ImGui::EndTabBar();
         }
+        
 
         // * close imgui window
         ImGui::End();
