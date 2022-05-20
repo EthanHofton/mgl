@@ -44,6 +44,8 @@ namespace mgl
 
             T* new_e = new T(t_entityId, args...);
             s_entites[t_entityId] = new_e;
+
+            CORE_INFO("Entity with id '{}' created", t_entityId);
             return new_e;
         }
 

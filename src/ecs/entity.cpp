@@ -41,11 +41,7 @@ namespace mgl
         return allEntites;
     }
 
-    Entity::Entity(std::string t_entityId)
-    {
-        m_entityId = t_entityId;
-        CORE_INFO("Entity with id '{}' created", m_entityId);
-    }
+    Entity::Entity(std::string t_entityId) : m_entityId(t_entityId) {}
 
     void Entity::parent(std::string t_parent)
     {
