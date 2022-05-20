@@ -29,6 +29,17 @@ namespace mgl
             {
                 throw std::runtime_error("Given type T is not derrived from Entity");
             }
+
+            if (t_entityId == "")
+            {
+                throw std::runtime_error("Entity cannot have blank entity id");
+            }
+
+            if (s_entites.find(t_entityId) == s_entites.end())
+            {
+                throw std::runtime_error("Entity ids must be unqiue");
+            }
+
             T* new_e = new T(t_entityId);
             s_entites[t_entityId] = new_e;
             return new_e;
@@ -67,10 +78,45 @@ namespace mgl
         // * entity id getter
         inline std::string getEntityId() { return m_entityId; }
 
+        // * entity active getter
+        inline bool isActive() { return m_active; }
+        // * entity active setter
+        inline void active(bool t_active) { m_active = t_active; }
+
+        // * entity parent setter
+        void parent(std::string);
+        // * entity parent getter
+        inline std::string getParent() { return m_parent; }
+        // * has parent check
+        inline bool hasParent() { return (m_parent != ""); }
+
+        // * child getter
+        inline std::vector<std::string> getChildren() { return m_children; }
+        // * has children check
+        inline bool hasChildren() { return (!m_children.empty()); }
+
+        // * virutal entity update function
+        virtual inline void update() {}
+
+    private:
+
+        inline void addChild(std::string t_childId) { m_children.push_back(t_childId); }
+        void removeChild(std::string t_childId);
+
     private:
 
         // * store the entity id
         std::string m_entityId;
+
+        // * entity active property
+        bool m_active = true;
+
+        // * entity parent
+        // * "" = null parent
+        std::string m_parent = "";
+
+        // * list of entity children
+        std::vector<std::string> m_children;
 
     };
 }

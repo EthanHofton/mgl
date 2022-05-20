@@ -35,4 +35,40 @@ namespace mgl
         m_entityId = t_entityId;
         CORE_INFO("Entity with id '{}' created", m_entityId);
     }
+
+    void Entity::parent(std::string t_parent)
+    {
+        if (t_parent == m_parent)
+        {
+            return;
+        }
+
+        // * if the entity prevoiusly had a parent
+        // *    remove the current entity as a child from prev parent
+        if (hasParent())
+        {
+            getEntity<Entity>(m_parent)->removeChild(getEntityId());
+        }
+
+        // assign the entity a new parent
+        // if the new parent is not null, add this as a child of the new parent
+        // also set the activity of the child to the activiy of the parent
+        m_parent = t_parent;
+        if (hasParent())
+        {
+            getEntity<Entity>(m_parent)->addChild(getEntityId());
+            active(getEntity<Entity>(m_parent)->isActive());
+        }
+
+        CORE_INFO("entity with id '{}' set entity with id '{}' as parent", m_entityId, m_parent);
+    }
+
+    void Entity::removeChild(std::string t_childId)
+    {
+        auto instance = std::find(m_children.begin(), m_children.end(), t_childId);
+        if (instance != m_children.end())
+        {
+            m_children.erase(instance);
+        }
+    }
 }
