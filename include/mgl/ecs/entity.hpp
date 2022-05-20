@@ -60,6 +60,12 @@ namespace mgl
             {
                 throw std::runtime_error("Given type T is not derrived from Entity");
             }
+
+            if (s_entites.find(t_entityId) == s_entites.end())
+            {
+                throw std::runtime_error("No entity found with id '"+t_entityId+"'");
+            }
+
             return reinterpret_cast<T*>(s_entites[t_entityId]);
         }
 
