@@ -30,7 +30,7 @@ namespace mgl
         // * get the parent window pointer
         inline Window* getWindow() { return m_parent; }
 
-        void imguiShowSceneHierarchy();
+        void customImguiInspector() override;
 
     private:
 

@@ -12,9 +12,8 @@ namespace mgl
 
     Scene::~Scene() {}
 
-    void Scene::imguiShowSceneHierarchy()
+    void Scene::customImguiInspector()
     {
-        ImGui::Begin(getEntityId().c_str());
-        ImGui::End();
+        
     }
 }

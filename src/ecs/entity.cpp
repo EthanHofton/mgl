@@ -163,4 +163,13 @@ namespace mgl
 
         return descendants;
     }
+
+    void Entity::imguiInspector()
+    {
+        // * create a new imgui window
+        ImGui::Begin(m_entityId.c_str());
+
+        // * close imgui window
+        ImGui::End();
+    }
 }
