@@ -13,13 +13,15 @@ namespace mgl
         // * reference entity using ids instead of pointers
         // * static create entity function. removes 'new' keyword from user
         template<typename T>
-        static void createEntity(std::string t_entityId)
+        static T* createEntity(std::string t_entityId)
         {
             if (!(std::is_base_of_v<Entity, T>))
             {
                 throw std::runtime_error("Given type T is not derrived from Entity");
             }
-            s_entites[t_entityId] = new T(t_entityId);
+            T* new_e = new T(t_entityId);
+            s_entites[t_entityId] = new_e;
+            return new_e;
         }
         // * static delete entity function. removed 'delete' keyword from user
         static void deleteEntity(std::string);
