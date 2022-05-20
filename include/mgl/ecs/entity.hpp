@@ -37,7 +37,7 @@ namespace mgl
                 throw std::runtime_error("Entity cannot have blank entity id");
             }
 
-            if (s_entites.find(t_entityId) != s_entites.end())
+            if (s_entites.find(t_entityId) != s_entites.end() && !s_entites.empty())
             {
                 throw std::runtime_error("Entity ids must be unqiue");
             }
