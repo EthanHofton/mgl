@@ -61,14 +61,14 @@ namespace mgl
             getEntity<Entity>(m_parent)->removeChild(getEntityId());
         }
 
-        CORE_DEBUG("TERST");
-
         // assign the entity a new parent
         // if the new parent is not null, add this as a child of the new parent
         m_parent = t_parent;
         if (hasParent())
         {
+            CORE_DEBUG("TERST");
             getEntity<Entity>(m_parent)->addChild(getEntityId());
+            CORE_DEBUG("TERST");
         }
 
         CORE_INFO("entity with id '{}' set entity with id '{}' as parent", m_entityId, m_parent);
