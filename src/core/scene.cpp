@@ -67,6 +67,9 @@ namespace mgl
 
         ImGui::EndChild();
 
+        ImGui::ShowDemoWindow();
+        ImGui::ShowMetricsWindow();
+
         ImGui::End();
     }
 
