@@ -62,7 +62,15 @@ namespace mgl
             treeFlags |= ImGuiTreeNodeFlags_Leaf;
         }
 
-        if (ImGui::TreeNodeEx(t_child.c_str(), treeFlags))
+        bool nodeOpen = ImGui::TreeNodeEx(t_child.c_str(), treeFlags);
+
+        ImGui::SameLine(ImGui::GetWindowWidth() - 65);
+        if (ImGui::SmallButton("Inspect"))
+        {
+            // t_e->shouldShowImguiInspector(true);
+        }
+
+        if (nodeOpen)
         {
             for (auto child : Entity::getEntity<Entity>(t_child)->getChildren())
             {
@@ -71,7 +79,5 @@ namespace mgl
 
             ImGui::TreePop();
         }
-        ImGui::SameLine();
-        ImGui::SmallButton("Inspect");
     }
 }
