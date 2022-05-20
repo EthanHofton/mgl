@@ -53,24 +53,26 @@ namespace mgl
         // // * close imgui window
         // ImGui::End();
 
-        const ImGuiViewport* viewport = ImGui::GetMainViewport();
-        ImGui::SetNextWindowPos(viewport->Pos);
-        ImGui::SetNextWindowSize(viewport->Size);
+        // const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        // ImGui::SetNextWindowPos(viewport->Pos);
+        // ImGui::SetNextWindowSize(viewport->Size);
 
-        ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
-        bool open = true;
-        ImGui::Begin("Example: Fullscreen window", &open, flags);
+        // ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
+        // bool open = true;
+        // ImGui::Begin("Example: Fullscreen window", &open, flags);
 
-        ImGui::BeginChild("Test Child");
+        // ImGui::BeginChild("Test Child");
 
-        ImGui::Text("test");
+        // ImGui::Text("test");
 
-        ImGui::EndChild();
+        // ImGui::EndChild();
+
+        
+
+        // ImGui::End();
 
         ImGui::ShowDemoWindow();
         ImGui::ShowMetricsWindow();
-
-        ImGui::End();
     }
 
     void Scene::imguiChildTree(std::string t_child)
