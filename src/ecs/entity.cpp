@@ -14,6 +14,22 @@ namespace mgl
         }
     }
 
+    void Entity::deleteAllEntities()
+    {
+        std::stack<Entity*> deleteStack;
+        for (auto entity : s_entites)
+        {
+            deleteStack.push(entity.second);
+        }
+        s_entites.clear();
+
+        while (!deleteStack.empty())
+        {
+            delete deleteStack.top();
+            deleteStack.pop();
+        }
+    }
+
     Entity::Entity(std::string t_entityId)
     {
         m_entityId = t_entityId;

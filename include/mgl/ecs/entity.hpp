@@ -36,7 +36,9 @@ namespace mgl
 
         // * static delete entity function. removed 'delete' keyword from user
         static void deleteEntity(std::string);
-        
+        // * static delete all function. this function deletes all remaning entites
+        static void deleteAllEntities();
+
         // * static get entity function. stops users from accecing entity by pointers and use ids
         template<typename T>
         static T* getEntity(std::string t_entityId)
@@ -62,10 +64,12 @@ namespace mgl
 
     public:
 
+        // * entity id getter
         inline std::string getEntityId() { return m_entityId; }
 
     private:
 
+        // * store the entity id
         std::string m_entityId;
 
     };
