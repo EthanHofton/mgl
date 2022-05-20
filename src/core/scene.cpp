@@ -56,14 +56,17 @@ namespace mgl
 
     void Scene::imguiChildTree(std::string t_child)
     {
-        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_None;
+        ImGuiTreeNodeFlags treeFlags = ImGuiTreeNodeFlags_SpanFullWidth;
         if (!Entity::getEntity<Entity>(t_child)->hasChildren())
         {
-            treeFlags = ImGuiTreeNodeFlags_Leaf;
+            treeFlags |= ImGuiTreeNodeFlags_Leaf;
         }
 
         if (ImGui::TreeNodeEx(t_child.c_str(), treeFlags))
         {
+            ImGui::SameLine();
+            ImGui::SmallButton("Inspect");
+
             for (auto child : Entity::getEntity<Entity>(t_child)->getChildren())
             {
                 imguiChildTree(child);
