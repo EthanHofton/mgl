@@ -37,9 +37,11 @@ namespace mgl
         // * static map to store all of the entity pointers mapped to there corresponding ids
         static std::map<std::string, Entity*> s_entites;
 
-        // private entity constructor. stoppes the users from using 'new' keyword
+    protected:
+
+        // protected entity constructor. stops the users from using 'new' keyword
         Entity(std::string);
-        // private entity constructor. stoppes the users from using 'new' keyword
+        // protected entity constructor. stops the users from using 'new' keyword
         virtual ~Entity() = default;
 
     public:
