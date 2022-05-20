@@ -157,7 +157,7 @@ namespace mgl
         std::vector<std::string> descendants = {};
         for (auto child : m_children)
         {
-            std::vector<std::string> v2 = getEntity<Entity>(child)->getDescendantsPreOrder();
+            std::vector<std::string> v2 = getEntity<Entity>(child)->getDescendantsPostOrder();
             descendants.insert(descendants.end(), v2.begin(), v2.end());
         }
 
