@@ -49,7 +49,10 @@ namespace mgl
     void Window::setActiveScene(std::string t_entityId)
     {
         // * set the old scences activity to false
-        Entity::getEntity<Scene>(m_activeScene)->activePropagate(false);
+        if (m_activeScene != "")
+        {
+            Entity::getEntity<Scene>(m_activeScene)->activePropagate(false);
+        }
 
         // * log scene change
         CORE_INFO("setting active scene with id: {0}", t_entityId);
