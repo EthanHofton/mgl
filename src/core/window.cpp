@@ -74,10 +74,10 @@ namespace mgl
                 {
                     ImGui_ImplSDL2_ProcessEvent(&m_graphicsInstance->getEvent());
                     m_inputManager->giveEvents(m_graphicsInstance->getEvent());
-                    
-                    if (m_activeScene != "")
+
+                    for (auto entity : Entity::getAllActiveEntites())
                     {
-                        Entity::getEntity<Scene>(m_activeScene)->onEvent(m_graphicsInstance->getEvent());
+                        Entity::getEntity<Entity>(entity)->onEvent(m_graphicsInstance->getEvent());
                     }
                     
                     if (m_graphicsInstance->getEvent().type == SDL_QUIT)
@@ -113,20 +113,17 @@ namespace mgl
         if (m_activeScene != "")
         {
             // * update scence first
-            Entity::getEntity<Scene>(m_activeScene)->update();
+            Entity::getEntity<Scene>(m_activeScene)->onUpdate();
 
             // * update other entites without scene
             // * loop through all the entites in existance
             // * update if the are not the scence and not active
-            for (auto entity : Entity::getAllEntites())
+            for (auto entity : Entity::getAllActiveEntites())
             {
                 if (entity != m_activeScene)
                 {
-                    if (Entity::getEntity<Entity>(entity)->isActive())
-                    {
-                        // * proform an entity update if the entity is active
-                        Entity::getEntity<Entity>(entity)->update();
-                    }
+                    // * proform an entity update if the entity is active
+                    Entity::getEntity<Entity>(entity)->onUpdate();
                 }
             }
 
@@ -149,7 +146,21 @@ namespace mgl
         
         if (m_activeScene != "")
         {
+            // * update scence first
             Entity::getEntity<Scene>(m_activeScene)->onDraw();
+
+            // * update other entites without scene
+            // * loop through all the entites in existance
+            // * update if the are not the scence and not active
+            for (auto entity : Entity::getAllActiveEntites())
+            {
+                if (entity != m_activeScene)
+                {
+                    // * proform an entity update if the entity is active
+                    Entity::getEntity<Entity>(entity)->onDraw();
+                }
+            }
+
         }
         
         ImGui::Render();

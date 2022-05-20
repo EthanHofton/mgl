@@ -50,12 +50,8 @@ namespace mgl
 
             s_entites[t_entityId] = new_e;
             
-            // * if the type of entity is scene
-            // *    call on init
-            if (std::is_same_v(Scene, T))
-            {
-                new_e->onInit();
-            }
+            // * call entity onInit()
+            new_e->onInit();
 
             return new_e;
         }
@@ -84,6 +80,9 @@ namespace mgl
 
         // * return a list with all the ids of all the entites in existence
         static std::vector<std::string> getAllEntites();
+
+        // * return a list with all the ids of all the entites in existence
+        static std::vector<std::string> getAllActiveEntites();
 
     private:
 
@@ -117,14 +116,28 @@ namespace mgl
         inline bool hasParent() { return (m_parent != ""); }
         // * get base parent
         std::string getBaseParent();
+        // * get ancestors
+        std::vector<std::string> getAncestors();
+        // * get descendants pre-order
+        std::vector<std::string> getDescendantsPreOrder();
+        // * get descendants post-order
+        std::vector<std::string> getDescendantsPostOrder();
 
         // * child getter
         inline std::vector<std::string> getChildren() { return m_children; }
         // * has children check
         inline bool hasChildren() { return (!m_children.empty()); }
 
-        // * virutal entity update function
-        virtual inline void update() {}
+        // * virutal entity on draw function
+        inline virtual void onDraw() {}
+        // * entity on event. gets called whenever an event is triggered
+        inline virtual void onEvent(SDL_Event &t_e) {}
+        // * entity on init. gets called right after the constructor
+        inline virtual void onInit() {}
+        // * entity on delete. gets called right after the constructor
+        inline virtual void onDelete() {}
+        // * entity on update. gets called right after the constructor
+        inline virtual void onUpdate() {}
 
         // * entity appears in imgui inspector
         void imguiInspector();

@@ -9,6 +9,9 @@ namespace mgl
         auto instance = s_entites.find(t_entityId);
         if (instance != s_entites.end())
         {
+            // * call entity on delete
+            s_entites[t_entityId]->onDelete();
+
             delete s_entites[t_entityId];
             s_entites.erase(instance);
         }
@@ -19,6 +22,7 @@ namespace mgl
         std::stack<Entity*> deleteStack;
         for (auto entity : s_entites)
         {
+            entity.second->onDelete();
             deleteStack.push(entity.second);
         }
 
@@ -37,6 +41,20 @@ namespace mgl
         for (auto entity : s_entites)
         {
             allEntites.push_back(entity.first);
+        }
+
+        return allEntites;
+    }
+
+    std::vector<std::string> Entity::getAllActiveEntites()
+    {
+        std::vector<std::string> allEntites;
+        for (auto entity : s_entites)
+        {
+            if (entity.second->isActive())
+            {
+                allEntites.push_back(entity.first);
+            }
         }
 
         return allEntites;
@@ -102,5 +120,54 @@ namespace mgl
         }
 
         return getEntity<Entity>(m_parent)->getBaseParent();
+    }
+
+    std::vector<std::string> Entity::getAncestors()
+    {
+        if (!hasParent())
+        {
+            return {};
+        }
+
+        std::vector<std::string> v1;
+        std::vector<std::string> v2 = getAncestors();
+        v1.insert(v1.end(), v2.begin(), v2.end());
+        return v1;
+    }
+
+    std::vector<std::string> Entity::getDescendantsPreOrder()
+    {
+        if (!hasChildren())
+        {
+            return {};
+        }
+
+        std::vector<std::string> descendants = {m_entityId};
+        for (auto child : m_children)
+        {
+            std::vector<std::string> v2 = getDescendantsPreOrder();
+            descendants.insert(descendants.end(), v2.begin(), v2.end());
+        }
+
+        return descendants;
+    }
+
+    std::vector<std::string> Entity::getDescendantsPostOrder()
+    {
+        if (!hasChildren())
+        {
+            return {};
+        }
+
+        std::vector<std::string> descendants;
+        for (auto child : m_children)
+        {
+            std::vector<std::string> v2 = getDescendantsPreOrder();
+            descendants.insert(descendants.end(), v2.begin(), v2.end());
+        }
+
+        descendants.push_back(getEntityId());
+
+        return descendants;
     }
 }
