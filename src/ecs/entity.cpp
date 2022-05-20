@@ -159,9 +159,10 @@ namespace mgl
             return {};
         }
 
-        std::vector<std::string> descendants;
+        std::vector<std::string> descendants = {};
         for (auto child : m_children)
         {
+            CORE_DEBUG("{}", child);
             std::vector<std::string> v2 = getDescendantsPreOrder();
             descendants.insert(descendants.end(), v2.begin(), v2.end());
         }
