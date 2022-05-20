@@ -71,4 +71,16 @@ namespace mgl
             m_children.erase(instance);
         }
     }
+
+    std::string Entity::getBaseParent()
+    {
+        // * (O(n))
+        
+        if (!hasParent())
+        {
+            return m_entityId;
+        }
+
+        return getEntity<Entity>(m_parent)->getBaseParent();
+    }
 }

@@ -89,6 +89,8 @@ namespace mgl
         inline std::string getParent() { return m_parent; }
         // * has parent check
         inline bool hasParent() { return (m_parent != ""); }
+        // * get base parent
+        std::string getBaseParent();
 
         // * child getter
         inline std::vector<std::string> getChildren() { return m_children; }
