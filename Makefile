@@ -37,6 +37,9 @@ endif
 ifeq ($(wildcard include/rapidjson/.*),)
 	ln -s -f "$(shell pwd)"/lib/rapidjson/include/rapidjson "$(shell pwd)"/include/rapidjson
 endif
+ifeq ($(wildcard include/glm/.*),)
+	ln -s -f "$(shell pwd)"/lib/glm/glm "$(shell pwd)"/include/glm
+endif
 ifeq ($(wildcard include/mgl/.*),)
 	ln -s -f "$(shell pwd)"/src/ "$(shell pwd)"/include/mgl
 endif

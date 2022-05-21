@@ -6,4 +6,6 @@
     #error MGL ONLY SUPPORTS OSX
 #endif
 
+#define BIT(x) (1 << x)
+
 #endif

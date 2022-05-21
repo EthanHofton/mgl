@@ -186,12 +186,12 @@ namespace mgl
     #define CORE_CRITICAL(...) mgl::Logger::instance()->coreCritical(__VA_ARGS__)
 
     // * client logger macros
-    #define APP_TRACE(...) mgl::Logger::instance()->trace(__VA_ARGS__)
-    #define APP_DEBUG(...) mgl::Logger::instance()->debug(__VA_ARGS__)
-    #define APP_INFO(...) mgl::Logger::instance()->info(__VA_ARGS__)
-    #define APP_WARN(...) mgl::Logger::instance()->warn(__VA_ARGS__)
-    #define APP_ERROR(...) mgl::Logger::instance()->error(__VA_ARGS__)
-    #define APP_CRITICAL(...) mgl::Logger::instance()->critical(__VA_ARGS__)
+    #define MGL_TRACE(...) mgl::Logger::instance()->trace(__VA_ARGS__)
+    #define MGL_DEBUG(...) mgl::Logger::instance()->debug(__VA_ARGS__)
+    #define MGL_INFO(...) mgl::Logger::instance()->info(__VA_ARGS__)
+    #define MGL_WARN(...) mgl::Logger::instance()->warn(__VA_ARGS__)
+    #define MGL_ERROR(...) mgl::Logger::instance()->error(__VA_ARGS__)
+    #define MGL_CRITICAL(...) mgl::Logger::instance()->critical(__VA_ARGS__)
     
 }
 
