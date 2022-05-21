@@ -29,11 +29,17 @@ libs:
 	mkdir -p include/
 ifeq ($(wildcard include/GL/.*),)
 	cd lib/glew/auto && make && cd .. && make && make install
+	ln -s -f "$(shell pwd)"/lib/glew/include/GL/ "$(shell pwd)"/include/GL
 endif
-	ln -s -f "$(shell pwd)"/lib/glew/include/GL/ include/GL
-	ln -s -f "$(shell pwd)"/lib/spdlog/include/spdlog/ include/spdlog
-	ln -s -f "$(shell pwd)"/lib/rapidjson/include/rapidjson include/rapidjson
-	ln -s -f "$(shell pwd)"/src/ include/mgl
+ifeq ($(wildcard include/spdlog/.*),)
+	ln -s -f "$(shell pwd)"/lib/spdlog/include/spdlog/ "$(shell pwd)"/include/spdlog
+endif
+ifeq ($(wildcard include/rapidjson/.*),)
+	ln -s -f "$(shell pwd)"/lib/rapidjson/include/rapidjson "$(shell pwd)"/include/rapidjson
+endif
+ifeq ($(wildcard include/mgl/.*),)
+	ln -s -f "$(shell pwd)"/src/ "$(shell pwd)"/include/mgl
+endif
 
 $(PROGRAM): $(OBJ)
 	$(CC) -dynamiclib -o $(BIN)/$(PROGRAM).dylib -install_name @rpath/$(PROGRAM).dylib $^ $(LDFLAGS)
