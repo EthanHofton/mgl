@@ -16,8 +16,7 @@ namespace mgl
     void Application::run()
     {
         MouseMovedEvent e({256, 321});
-        // CORE_INFO("{}", e);
-        std::cout << e << std::endl;
+        CORE_INFO("{}", e);
         // while (true);
     }
 }
