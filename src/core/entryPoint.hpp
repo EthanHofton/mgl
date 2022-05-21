@@ -1,6 +1,8 @@
 #ifndef entryPoint_hpp
 #define entryPoint_hpp
 
+#ifdef MGL_PLATFORM_OSX
+
 // * define an external function for the clinent to create the main application
 extern mgl::Application* mgl::createApplication();
 
@@ -18,5 +20,7 @@ int main(int argc, char** argv)
     // delete the app
     delete app;
 }
+
+#endif
 
 #endif

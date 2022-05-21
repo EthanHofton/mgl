@@ -1,4 +1,4 @@
-#include <mgl/application.hpp>
+#include <mgl/core/application.hpp>
 
 namespace mgl
 {

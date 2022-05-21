@@ -1,7 +1,10 @@
 CC = c++
 
+# cxx arguments
 CXXFLAGS = -Wall -std=c++17 -stdlib=libc++
-CXXFLAGS += -Iinclude/ -Isrc/
+
+# include paths
+CXXFLAGS += -Iinclude/
 
 # macros
 CXXFLAGS += -DMGL_PLATFORM_OSX
@@ -24,11 +27,14 @@ dirs:
 
 libs:
 ifeq ($(wildcard include/GL/.*),)
-	@echo "creating include/GL"
+# 	@echo "creating include/GL"
 	cd lib/glew/auto && make && cd .. && make && make install
-	mkdir -p include/GL/
-	cp -a lib/glew/include/GL/. include/GL/
+# 	mkdir -p include/GL/
+# 	cp -a lib/glew/include/GL/. include/GL/
 endif
+	ln -s -f "$(shell pwd)"/lib/glew/include/GL/ include/GL
+	ln -s -f "$(shell pwd)"/lib/spdlog/include/spdlog/ include/spdlog
+	ln -s -f "$(shell pwd)"/src/ include/mgl
 
 $(PROGRAM): $(OBJ)
 	$(CC) -dynamiclib -o $(BIN)/$(PROGRAM).dylib -install_name @rpath/$(PROGRAM).dylib $^ $(LDFLAGS)
