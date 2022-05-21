@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
     // * run the app
     CORE_INFO("MGL RUNTIME");
-    // app->run();
+    app->run();
 
     // delete the app
     CORE_INFO("MGL CLEANUP");
