@@ -4,10 +4,10 @@
 // * use of mgl applications
 
 // * mgl main application
-#include "mgl/application.hpp"
+#include "core/application.hpp"
 
 // * entry point
-#include "mgl/entryPoint.hpp"
+#include "core/entryPoint.hpp"
 
 
 #endif
