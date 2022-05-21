@@ -13,10 +13,17 @@ namespace mgl
 
     }
 
+    bool testDispatchFunction(MouseMovedEvent& e)
+    {
+        std::cout << e << std::endl;
+    }
+
     void Application::run()
     {
         MouseMovedEvent e({256, 321});
-        CORE_INFO("{}", e);
+        EventDispatcher ed(e);
+
+        ed.dispatch<MouseMovedEvent>(testDispatchFunction);
         // while (true);
     }
 }
