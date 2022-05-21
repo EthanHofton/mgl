@@ -2,6 +2,8 @@
 #define application_hpp
 
 #include "core.hpp"
+#include "../util/util.hpp"
+#include "../events/event.hpp"
 
 namespace mgl
 {

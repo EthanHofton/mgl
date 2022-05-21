@@ -1,4 +1,5 @@
 #include <mgl/core/application.hpp>
+#include <mgl/events/mouseEvent.hpp>
 
 namespace mgl
 {
@@ -14,6 +15,8 @@ namespace mgl
 
     void Application::run()
     {
-        while (true);
+        MouseMovedEvent e({256, 321});
+        CORE_INFO("{}", e);
+        // while (true);
     }
 }
