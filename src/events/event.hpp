@@ -1,9 +1,6 @@
 #ifndef event_hpp
 #define event_hpp
 
-#include <string>
-#include <functional>
-
 #include "../core/core.hpp"
 
 namespace mgl

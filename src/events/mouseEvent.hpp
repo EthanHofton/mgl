@@ -3,9 +3,6 @@
 
 #include "event.hpp"
 
-#include <sstream>
-#include <glm/glm.hpp>
-
 namespace mgl
 {
     // * mouse moved event implimentation

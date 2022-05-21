@@ -4,3 +4,4 @@ src/**/*.o
 bin/
 include/GL/
 include/
+src/mglpch.hpp.gch

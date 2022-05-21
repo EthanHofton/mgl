@@ -1,18 +1,12 @@
 #ifndef util_hpp
 #define util_hpp
 
-#include <iostream>
-#include <memory>
-
 #define FMT_HEADER_ONLY
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#include <fstream>
-#include <cassert>
-#include <string>
 #include <rapidjson/document.h>
 
 using namespace rapidjson;

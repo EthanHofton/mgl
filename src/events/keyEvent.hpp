@@ -3,8 +3,6 @@
 
 #include "event.hpp"
 
-#include <sstream>
-
 namespace mgl
 {
     // * base key event class all other key events will impliment

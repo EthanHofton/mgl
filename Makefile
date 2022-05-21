@@ -15,18 +15,18 @@ LDFLAGS += -framework OpenGL
 
 SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
 OBJ = $(SRC:.cpp=.o)
-PROGRAM = libmgl
+PROGRAM = mgl
 BIN = bin
 
 .PHONY: all clean
 
-all: dirs libs $(PROGRAM)
+all: dirs libs precompile $(PROGRAM)
 
 dirs:
 	mkdir -p ./$(BIN)
+	mkdir -p include/
 
 libs:
-	mkdir -p include/
 ifeq ($(wildcard include/GL/.*),)
 	cd lib/glew/auto && make && cd .. && make && make install
 	ln -s -f "$(shell pwd)"/lib/glew/include/GL/ "$(shell pwd)"/include/GL
@@ -44,8 +44,14 @@ ifeq ($(wildcard include/mgl/.*),)
 	ln -s -f "$(shell pwd)"/src/ "$(shell pwd)"/include/mgl
 endif
 
+precompile:
+ifeq ($(wildcard src/$(PROGRAM)pch.hpp.gch),)
+	@echo creating precompile
+	$(CC) $(CXXFLAGS) src/$(PROGRAM)pch.hpp
+endif
+
 $(PROGRAM): $(OBJ)
-	$(CC) -dynamiclib -o $(BIN)/$(PROGRAM).dylib -install_name @rpath/$(PROGRAM).dylib $^ $(LDFLAGS)
+	$(CC) -dynamiclib -o $(BIN)/lib$(PROGRAM).dylib -install_name @rpath/lib$(PROGRAM).dylib $^ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS) 

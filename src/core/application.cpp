@@ -1,3 +1,4 @@
+#include <mgl/mglpch.hpp>
 #include <mgl/core/application.hpp>
 #include <mgl/events/mouseEvent.hpp>
 
@@ -15,6 +16,7 @@ namespace mgl
 
     void Application::run()
     {
+        
         // while (true);
     }
 }
