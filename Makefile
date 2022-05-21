@@ -28,13 +28,11 @@ dirs:
 libs:
 	mkdir -p include/
 ifeq ($(wildcard include/GL/.*),)
-# 	@echo "creating include/GL"
 	cd lib/glew/auto && make && cd .. && make && make install
-# 	mkdir -p include/GL/
-# 	cp -a lib/glew/include/GL/. include/GL/
 endif
 	ln -s -f "$(shell pwd)"/lib/glew/include/GL/ include/GL
 	ln -s -f "$(shell pwd)"/lib/spdlog/include/spdlog/ include/spdlog
+	ln -s -f "$(shell pwd)"/lib/rapidjson/include/rapidjson include/rapidjson
 	ln -s -f "$(shell pwd)"/src/ include/mgl
 
 $(PROGRAM): $(OBJ)
