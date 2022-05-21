@@ -9,5 +9,7 @@
 // * entry point
 #include "core/entryPoint.hpp"
 
+// * logger and config
+#include "util/util.hpp"
 
 #endif
