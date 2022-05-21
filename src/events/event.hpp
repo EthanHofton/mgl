@@ -34,7 +34,7 @@ namespace mgl
 
 // * macro to impliment all of the pure virtual functions inside of a derrived event class
 // * just by providing the event type they are
-#define EVENT_CLASS_TYPE(type) static eventType getStaticType() { return eventType::##type; } \
+#define EVENT_CLASS_TYPE(type) static eventType getStaticType() { return eventType::type; } \
                                virtual eventType getEventType() const override { return getStaticType(); } \
                                virtual std::string getName() const override { return #type; }
 
@@ -102,7 +102,7 @@ namespace mgl
                 // * call the callback function the the event as the paramenters
                 m_event.m_handeled = t_dispatchFunction(*(T*)&m_event);
                 // return ture since the event dispatch function was dispatched
-                return ture;
+                return true;
             }
 
             // * return false since the event dispatch function was not dispatched

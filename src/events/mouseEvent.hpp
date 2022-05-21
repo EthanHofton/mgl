@@ -75,7 +75,7 @@ namespace mgl
 
         // * store the mouse scroll event x,y offset
         glm::vec2 m_offset;
-    }
+    };
 
     // * mouse button event base class
     // * to be derrived by mouse button pressed and mouse button released
