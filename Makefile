@@ -26,6 +26,7 @@ dirs:
 	mkdir -p ./$(BIN)
 
 libs:
+	mkdir -p include/
 ifeq ($(wildcard include/GL/.*),)
 # 	@echo "creating include/GL"
 	cd lib/glew/auto && make && cd .. && make && make install
