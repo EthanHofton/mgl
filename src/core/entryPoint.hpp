@@ -13,7 +13,6 @@ extern mgl::Application* mgl::createApplication();
 // * instead of being complied amd linked without explisity knowing createApplication()
 int main(int argc, char** argv)
 {
-    MGL_CORE_ASSERT(0!=0, "0!=0")
     // * define the app using createApplicaion()
     MGL_CORE_INFO("MGL STARTUP");
     auto app = mgl::createApplication();
