@@ -2,7 +2,7 @@
 #define OSXWindow_hpp
 
 #include <mgl/core/window.hpp>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <mgl/util/util.hpp>
 
