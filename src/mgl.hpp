@@ -12,4 +12,13 @@
 // * logger and config
 #include "util/util.hpp"
 
+// * events
+#include "events/event.hpp"
+#include "events/keyEvent.hpp"
+#include "events/mouseEvent.hpp"
+#include "events/applicationEvent.hpp"
+
+// * window
+#include "core/window.hpp"
+
 #endif

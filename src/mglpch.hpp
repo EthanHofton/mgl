@@ -9,6 +9,7 @@
 #include <functional>
 #include <fstream>
 #include <cassert>
+#include <signal.h>
 
 // * data structors
 #include <string>
