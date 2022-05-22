@@ -29,7 +29,7 @@ namespace mgl
         std::unique_ptr<Window> m_window;
 
         // * store weather application is running
-        bool m_running = ture;
+        bool m_running = true;
     };
 
     // * decliration of createApplication to be defined by client
