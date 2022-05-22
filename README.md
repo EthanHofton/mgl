@@ -11,10 +11,11 @@ cd mgl
 make
 ```
 
-This will create a file called `libmgl.dylib` inside the `mgl/bin/` directory. To include in your project add `mgl/include/` to your header search paths
+This will create a file called `libmgl.dylib` inside the `mgl/bin/` directory. To include in your project add `mgl/include/` to your header search paths. The folder `mgl/include/` will only be created when the libary is built.
 and `mgl/bin/libmgl.dylib` to your linking stage.
 
-**THIS IS FOR MAC ONLY**. In order to get this working on windows or linux, replace mgl/lib/SDL2.framework with a relevent build of SDL2.
+**AT THE MOMEMNT, THIS IS FOR MAC ONLY**. For the time being, mgl is a mac only libary. Windows and linux coming soon.
+**PRESET MACROS** please define MGL_PLATFORM_OSX. You can do this in the compilation stage in your `CXXFLAGS` for makefile. Add the flag `-DMGL_PLATFORM_OSX` **otherwise your project will not work**.
 
 # Mac linking issues
 
