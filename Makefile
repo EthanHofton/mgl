@@ -8,6 +8,7 @@ CXXFLAGS += -Iinclude/
 
 # macros
 CXXFLAGS += -DMGL_PLATFORM_OSX
+CXXFLAGS += -DMGL_ENABLE_ASSERTS
 
 # dynamicly link to GLEW
 LDFLAGS += -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
