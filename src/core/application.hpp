@@ -3,7 +3,7 @@
 
 #include <mgl/mglpch.hpp>
 #include "core.hpp"
-#include "../events/event.hpp"
+#include "../events/applicationEvent.hpp"
 #include "window.hpp"
 
 namespace mgl
@@ -25,6 +25,8 @@ namespace mgl
         void onEvent(Event& e);
 
     private:
+
+        bool onWindowClose(WindowCloseEvent& e);
 
         // * store a unique pointer to window
         // * beacuse only this class will own the pointer

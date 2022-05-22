@@ -20,7 +20,10 @@ namespace mgl
 
     void Application::onEvent(Event& e)
     {
-        MGL_CORE_INFO("{}", e);
+        EventDispatcher dispatcher(e);
+        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+
+        MGL_CORE_TRACE("{}", e);
     }
 
     void Application::run()
@@ -29,5 +32,14 @@ namespace mgl
         {
             m_window->onUpdate();
         }
+    }
+
+    bool Application::onWindowClose(WindowCloseEvent& e)
+    {
+        // * terminate application
+        m_running = false;
+
+        // * return true becouse the event has been handled
+        return true;
     }
 }
