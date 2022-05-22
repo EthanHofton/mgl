@@ -57,6 +57,12 @@ namespace mgl
         virtual int getCategoryFlags() const = 0;
         // * std::to string to print info about the event
         virtual std::string toString() const { return getName(); }
+        // * getter for m_handeled
+        // * returned weather or not the event has been handled
+        inline bool handeled()
+        {
+            return m_handeled;
+        }
 
         // * util function to check if an event is in category
         inline bool isInCategory(eventCategory t_category)

@@ -2,8 +2,9 @@
 #define application_hpp
 
 #include <mgl/mglpch.hpp>
+#include <mgl/events/applicationEvent.hpp>
+#include "layerStack.hpp"
 #include "core.hpp"
-#include "../events/applicationEvent.hpp"
 #include "window.hpp"
 
 namespace mgl
@@ -22,7 +23,14 @@ namespace mgl
         // * application main loop
         void run();
 
+        // * event handler for application
+        // * gets called by window by setting it as the event callback function
         void onEvent(Event& e);
+
+        // * push a layer onto the layerstack
+        void pushLayer(Layer* t_layer);
+        // * push an overlay to the layer stack
+        void pushOverlay(Layer* t_overlay);
 
     private:
 
@@ -34,6 +42,9 @@ namespace mgl
 
         // * store weather application is running
         bool m_running = true;
+
+        // * layer stack
+        LayerStack m_layerStack;
     };
 
     // * decliration of createApplication to be defined by client

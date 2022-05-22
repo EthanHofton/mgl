@@ -21,4 +21,7 @@
 // * window
 #include "core/window.hpp"
 
+// * layers
+#include "core/layer.hpp"
+
 #endif

@@ -18,18 +18,46 @@ namespace mgl
 
     }
 
+    void Application::pushLayer(Layer* t_layer)
+    {
+        m_layerStack.pushLayer(t_layer);
+    }
+
+    void Application::pushOverlay(Layer* t_overlay)
+    {
+        m_layerStack.pushOverlay(t_overlay);
+    }
+
     void Application::onEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
         MGL_CORE_TRACE("{}", e);
+
+        // * propagate the event down the layer stack
+        for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
+        {
+            // * call the on event for each layer
+            (*--it)->onEvent(e);
+            // * break if the event is handled
+            if (e.handeled())
+            {
+                break;
+            }
+        }
     }
 
     void Application::run()
     {
         while (m_running)
         {
+            // * loop through each layer and call on update
+            for (Layer *layer : m_layerStack)
+            {
+                layer->onUpdate();
+            }
+
             m_window->onUpdate();
         }
     }
