@@ -2,6 +2,7 @@
 #define event_hpp
 
 #include "../core/core.hpp"
+#include <spdlog/fmt/bundled/format.h>
 
 namespace mgl
 {
@@ -113,10 +114,27 @@ namespace mgl
     };
 }
 
+// * std::cout compatibility
 inline std::ostream& operator<<(std::ostream& out, const mgl::Event& e)
 {
     out << e.toString();
     return out;
 }
+
+// * fmt format string compatibility
+template<>
+struct fmt::formatter<mgl::Event>
+{
+    constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin()) 
+    {
+        return ctx.end();
+    }
+
+    template<typename FormatContext>
+    auto format(const mgl::Event& input, FormatContext& ctx) -> decltype(ctx.out())
+    {
+        return format_to(ctx.out(), "{}", input.toString());
+    }
+};
 
 #endif

@@ -5,6 +5,10 @@
 #include <mgl/core/window.hpp>
 #include <GLFW/glfw3.h>
 
+#include <mgl/events/keyEvent.hpp>
+#include <mgl/events/applicationEvent.hpp>
+#include <mgl/events/mouseEvent.hpp>
+
 namespace mgl
 {
     class OSXWindow : public Window

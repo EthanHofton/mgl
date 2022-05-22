@@ -22,6 +22,8 @@ namespace mgl
         // * application main loop
         void run();
 
+        void onEvent(Event& e);
+
     private:
 
         // * store a unique pointer to window

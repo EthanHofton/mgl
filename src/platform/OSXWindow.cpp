@@ -5,6 +5,11 @@ namespace mgl
 {
     static bool s_GLFWInit = false;
 
+    static void GLFWErrorCallback(int t_error, const char* t_description)
+    {
+        MGL_CORE_ERROR("GLFW Error ({}): {}", t_error, t_description);
+    }
+
     Window* Window::create(const windowProps& t_props)
     {
         return new OSXWindow(t_props);
@@ -39,6 +44,9 @@ namespace mgl
             // * assert wather the initaization was succesful or not
             MGL_CORE_ASSERT(sucess, "Could not initaize GLFW");
 
+            // * set glfw error callback
+            glfwSetErrorCallback(GLFWErrorCallback);
+
             // * mark glfwinit as true
             s_GLFWInit = true;
         }
@@ -52,6 +60,118 @@ namespace mgl
         glfwSetWindowUserPointer(m_window, &m_data);
         // * turn on vsync
         setVSync(true);
+
+        // * set GLFW callbacks
+        // * glfw window resize event callback function
+        glfwSetWindowSizeCallback(m_window, [](GLFWwindow * t_window, int t_width, int t_height)
+        {
+            // * get the user data from the window
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+            // * set a window resize
+            wdata.m_size = {t_width, t_height};
+
+            // * create a window resize event
+            WindowResizeEvent event({t_width, t_height});
+            // * run the window event callback with the created event
+            wdata.m_eventCallback(event);
+        });
+
+        // * glfw window close callback function
+        glfwSetWindowCloseCallback(m_window, [](GLFWwindow *t_window)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+            // * create a window close event
+            WindowCloseEvent event;
+            // * run the window event callback function with the created event
+            wdata.m_eventCallback(event);
+        });
+
+        // * glfw key event callback
+        glfwSetKeyCallback(m_window, [](GLFWwindow *t_window, int t_key, int t_scancode, int t_action, int t_mods)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+
+            // * go thorugh each action possiblity
+            switch (t_action)
+            {
+                case GLFW_PRESS:
+                {
+                    // * create a key press event with no repetes
+                    KeyPressedEvent event(t_key, 0);
+                    // * run the callback function with this event
+                    wdata.m_eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    // * create a key released event with the key
+                    KeyReleasedEvent event(t_key);
+                    // * run the callback function with this event
+                    wdata.m_eventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT:
+                {
+                    // * create a key pressed event with repetes and the given key
+                    KeyPressedEvent event(t_key, 1);
+                    // * run the callback function with this events
+                    wdata.m_eventCallback(event);
+                    break;
+                }
+            }
+        });
+
+        // * glfw mouse event callback
+        glfwSetMouseButtonCallback(m_window, [](GLFWwindow* t_window, int t_button, int t_action, int t_mods)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+
+            // * go thorugh each action possiblity
+            switch (t_action)
+            {
+                case GLFW_PRESS:
+                {
+                    // * create a new mouse pressed event
+                    MouseButtonPressedEvent event(t_button);
+                    // * run the callback function with this events
+                    wdata.m_eventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    // * create a new mouse released event
+                    MouseButtonReleasedEvent event(t_button);
+                    // * run the callback function with this events
+                    wdata.m_eventCallback(event);
+                    break;
+                }
+            }
+        });
+
+        // * glfw set mouse scroll callback function
+        glfwSetScrollCallback(m_window, [](GLFWwindow *t_window, double t_x, double t_y)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+            // * create a mouse scroll event
+            MouseScrolledEvent event({t_x, t_y});
+            // * run the window event callback function with the created event
+            wdata.m_eventCallback(event);
+        });
+
+        // * glfw mouse moved event
+        glfwSetCursorPosCallback(m_window, [](GLFWwindow *t_window, double t_x, double t_y)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+            // * create a mouse scroll event
+            MouseMovedEvent event({t_x, t_y});
+            // * run the window event callback function with the created event
+            wdata.m_eventCallback(event);
+        });
     }
 
     void OSXWindow::quit()
