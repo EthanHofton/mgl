@@ -6,6 +6,8 @@
 #include "../events/event.hpp"
 #include "window.hpp"
 
+#include <GL/glew.h>
+
 namespace mgl
 {
     // * application app
