@@ -172,12 +172,12 @@ namespace mgl
     };
 
     // * core logger macros
-    #define CORE_TRACE(...) mgl::Logger::instance()->coreTrace(__VA_ARGS__)
-    #define CORE_DEBUG(...) mgl::Logger::instance()->coreDebug(__VA_ARGS__)
-    #define CORE_INFO(...) mgl::Logger::instance()->coreInfo(__VA_ARGS__)
-    #define CORE_WARN(...) mgl::Logger::instance()->coreWarn(__VA_ARGS__)
-    #define CORE_ERROR(...) mgl::Logger::instance()->coreError(__VA_ARGS__)
-    #define CORE_CRITICAL(...) mgl::Logger::instance()->coreCritical(__VA_ARGS__)
+    #define MGL_CORE_TRACE(...) mgl::Logger::instance()->coreTrace(__VA_ARGS__)
+    #define MGL_CORE_DEBUG(...) mgl::Logger::instance()->coreDebug(__VA_ARGS__)
+    #define MGL_CORE_INFO(...) mgl::Logger::instance()->coreInfo(__VA_ARGS__)
+    #define MGL_CORE_WARN(...) mgl::Logger::instance()->coreWarn(__VA_ARGS__)
+    #define MGL_CORE_ERROR(...) mgl::Logger::instance()->coreError(__VA_ARGS__)
+    #define MGL_CORE_CRITICAL(...) mgl::Logger::instance()->coreCritical(__VA_ARGS__)
 
     // * client logger macros
     #define MGL_TRACE(...) mgl::Logger::instance()->trace(__VA_ARGS__)

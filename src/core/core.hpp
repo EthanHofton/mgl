@@ -9,7 +9,7 @@
 // * asserts
 #ifdef MGL_ENABLE_ASSERTS
     #define MGL_ASSERT(x, ...) { if (!(x)) { MGL_ERROR("Assertion Failed: {}", __VA_ARGS__); raise(SIGTRAP); } }
-    #define MGL_CORE_ASSERT(x, ...) { if (!(x)) { CORE_ERROR("Assertion Failed: {}", __VA_ARGS__); raise(SIGTRAP); } }
+    #define MGL_CORE_ASSERT(x, ...) { if (!(x)) { MGL_CORE_ERROR("Assertion Failed: {}", __VA_ARGS__); raise(SIGTRAP); } }
 #else
     #define MGL_ASSERT(x, ...)
     #define MGL_CORE_ASSERT(x, ...)

@@ -28,7 +28,7 @@ namespace mgl
         m_data.m_size = t_props.m_size;
 
         // * log new window creation
-        CORE_INFO("Creating window {} ({}, {})", m_data.m_title, m_data.m_size.x, m_data.m_size.y);
+        MGL_CORE_INFO("Creating window {} ({}, {})", m_data.m_title, m_data.m_size.x, m_data.m_size.y);
 
         // * check glfw is not allready initalized
         if (!s_GLFWInit)

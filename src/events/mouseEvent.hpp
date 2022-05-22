@@ -1,6 +1,7 @@
 #ifndef mouseEvent_hpp
 #define mouseEvent_hpp
 
+#include <mgl/mglpch.hpp>
 #include "event.hpp"
 
 namespace mgl

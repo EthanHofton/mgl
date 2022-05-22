@@ -1,12 +1,10 @@
 #ifndef application_hpp
 #define application_hpp
 
+#include <mgl/mglpch.hpp>
 #include "core.hpp"
-#include "../util/util.hpp"
 #include "../events/event.hpp"
 #include "window.hpp"
-
-#include <GL/glew.h>
 
 namespace mgl
 {

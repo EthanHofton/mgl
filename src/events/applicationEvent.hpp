@@ -1,6 +1,7 @@
 #ifndef applicationEvent_hpp
 #define applicationEvent_hpp
 
+#include <mgl/mglpch.hpp>
 #include "event.hpp"
 
 namespace mgl

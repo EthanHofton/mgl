@@ -1,10 +1,9 @@
 #ifndef OSXWindow_hpp
 #define OSXWindow_hpp
 
+#include <mgl/mglpch.hpp>
 #include <mgl/core/window.hpp>
 #include <GLFW/glfw3.h>
-
-#include <mgl/util/util.hpp>
 
 namespace mgl
 {

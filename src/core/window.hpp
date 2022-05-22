@@ -2,9 +2,8 @@
 #define window_hpp
 
 #include <mgl/mglpch.hpp>
-
-#include "core.hpp"
 #include <mgl/events/event.hpp>
+#include "core.hpp"
 
 namespace mgl
 {

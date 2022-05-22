@@ -1,6 +1,7 @@
 #ifndef keyEvent_hpp
 #define keyEvent_hpp
 
+#include <mgl/mglpch.hpp>
 #include "event.hpp"
 
 namespace mgl

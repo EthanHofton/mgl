@@ -3,7 +3,7 @@
 
 #ifdef MGL_PLATFORM_OSX
 
-#include "../util/util.hpp"
+#include <mgl/mglpch.hpp>
 
 // * define an external function for the clinent to create the main application
 extern mgl::Application* mgl::createApplication();
@@ -14,15 +14,15 @@ extern mgl::Application* mgl::createApplication();
 int main(int argc, char** argv)
 {
     // * define the app using createApplicaion()
-    CORE_INFO("MGL STARTUP");
+    MGL_CORE_INFO("MGL STARTUP");
     auto app = mgl::createApplication();
 
     // * run the app
-    CORE_INFO("MGL RUNTIME");
+    MGL_CORE_INFO("MGL RUNTIME");
     app->run();
 
     // delete the app
-    CORE_INFO("MGL CLEANUP");
+    MGL_CORE_INFO("MGL CLEANUP");
     delete app;
 }
 

@@ -21,4 +21,7 @@
 // * glm
 #include <glm/glm.hpp>
 
+// * logger
+#include <mgl/util/util.hpp>
+
 #endif
