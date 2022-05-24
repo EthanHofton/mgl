@@ -61,6 +61,7 @@ namespace mgl
         }
 
         // * define the version and compatibilty settings
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 
@@ -196,7 +197,7 @@ namespace mgl
             int glewSucces = glewInit();
             MGL_CORE_ASSERT(glewSucces == GLEW_OK, "GLEW Error: Could not initialize");
 
-            std::cout << glGetString(GL_VERSION) << std::endl;
+            MGL_CORE_INFO("GLEW intialized: OpenGL Version: {}", std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
 
             s_GLEWInit = true;
         }
