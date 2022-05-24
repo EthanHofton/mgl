@@ -19,7 +19,7 @@ namespace mgl
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::get();
-        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
+        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y - 20);
 
         double current_time = glfwGetTime();
         io.DeltaTime = m_time > 0.0 ? (float)(current_time - m_time) : (float)(1.0f / 60.0f);
@@ -90,8 +90,6 @@ namespace mgl
 
     void ImGuiLayer::onAttach()
     {
-        MGL_CORE_INFO("WINDOW SIZE ({}, {})", Application::get().getWindow().getSize().x, Application::get().getWindow().getSize().y);
-
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
