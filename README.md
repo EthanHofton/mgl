@@ -18,7 +18,13 @@ and `mgl/bin/libmgl.dylib` to your linking stage.
 
 # Preprocessor Definitions
 
+Platform
+-------------
+
 please define `MGL_PLATFORM_OSX`. Add the flag `-DMGL_PLATFORM_OSX` to your `g++` command or to your `CXXFLAGS` in your makefile **otherwise your project will not work**.
+
+Asserts
+-------------
 
 Optionally, you can define `MGL_ENABLE_ASSERTS`. This will enable asserts in your program. 
 You can use the `MGL_ASSERT(condition, message)` macro do call and assert which will throw an error if the condition is false and log message. If `MGL_ENABLE_ASSERTS` is no defined, all asserts will be stripped from the program at compile time. To enable assets add the compiler flag `-DMGL_ENABLE_ASSERTS` in `g++` or add this to your `CXXFLAGS` in your makefile.
