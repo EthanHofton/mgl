@@ -1,4 +1,5 @@
 #include "layer.hpp"
+#include <mgl/mglpch.hpp>
 
 namespace mgl
 {

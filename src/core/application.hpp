@@ -3,6 +3,7 @@
 
 #include <mgl/mglpch.hpp>
 #include <mgl/events/applicationEvent.hpp>
+
 #include "layerStack.hpp"
 #include "core.hpp"
 #include "window.hpp"

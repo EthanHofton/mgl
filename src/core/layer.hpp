@@ -1,7 +1,6 @@
 #ifndef layer_hpp
 #define layer_hpp
 
-#include <mgl/mglpch.hpp>
 #include <mgl/core/core.hpp>
 #include <mgl/events/event.hpp>
 

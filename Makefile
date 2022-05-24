@@ -14,10 +14,12 @@ CXXFLAGS += -DMGL_ENABLE_ASSERTS
 LDFLAGS = -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
 # statically link to glfw
 LDFLAGS += -Llib/glfw/bin/src/ -lglfw3
+# statically link to imgui
+LDFLAGS += -Llib/imgui/bin/ -limgui
 # additional framework dependencies
 LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 
-SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
+SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/**/**/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 PROGRAM = mgl
 BIN = bin
@@ -57,11 +59,18 @@ ifeq ($(wildcard include/glfw/.*),)
 	@echo creating soft link include/glfw
 	ln -s -f "$(shell pwd)"/lib/glfw/include/GLFW "$(shell pwd)"/include/glfw
 endif
+ifeq ($(wildcard include/imgui/.*),)
+	@echo creating imgui static lib
+	cd lib/imgui && make
+	@echo creating soft link include/imgui
+	ln -s -f "$(shell pwd)"/lib/imgui/include/imgui "$(shell pwd)"/include/imgui
+endif
 
 ifeq ($(wildcard include/mgl/.*),)
 	@echo creating soft link include/mgl
 	ln -s -f "$(shell pwd)"/src/ "$(shell pwd)"/include/mgl
 endif
+
 
 precompile:
 ifeq ($(wildcard src/$(PROGRAM)pch.hpp.gch),)
