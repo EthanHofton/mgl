@@ -17,4 +17,6 @@
 
 #define BIT(x) (1 << x)
 
+#define MGL_BIND_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
 #endif

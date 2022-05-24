@@ -7,8 +7,6 @@
 
 #include <mgl/core/application.hpp>
 
-#define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
-
 namespace mgl
 {
     ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {}
@@ -19,7 +17,7 @@ namespace mgl
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::get();
-        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y - 20);
+        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
 
         double current_time = glfwGetTime();
         io.DeltaTime = m_time > 0.0 ? (float)(current_time - m_time) : (float)(1.0f / 60.0f);
@@ -37,28 +35,35 @@ namespace mgl
     void ImGuiLayer::onEvent(Event &e)
     {
         EventDispatcher eventDispatcher(e);
-        eventDispatcher.dispatch<KeyPressedEvent>(BIND_FN(ImGuiLayer::onKeyPressed));
-        eventDispatcher.dispatch<KeyReleasedEvent>(BIND_FN(ImGuiLayer::onKeyReleased));
-        eventDispatcher.dispatch<MouseButtonPressedEvent>(BIND_FN(ImGuiLayer::onMouseButtonPressed));
-        eventDispatcher.dispatch<MouseButtonReleasedEvent>(BIND_FN(ImGuiLayer::onMouseButtonReleased));
-        eventDispatcher.dispatch<MouseMovedEvent>(BIND_FN(ImGuiLayer::onMouseMove));
-        eventDispatcher.dispatch<MouseScrolledEvent>(BIND_FN(ImGuiLayer::onMouseScroll));
+        eventDispatcher.dispatch<KeyPressedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyPressed));
+        eventDispatcher.dispatch<KeyReleasedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyReleased));
+        // eventDispatcher.dispatch<KeyTypedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyTyped));
+        eventDispatcher.dispatch<MouseButtonPressedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseButtonPressed));
+        eventDispatcher.dispatch<MouseButtonReleasedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseButtonReleased));
+        eventDispatcher.dispatch<MouseMovedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseMove));
+        eventDispatcher.dispatch<MouseScrolledEvent>(MGL_BIND_FN(ImGuiLayer::onMouseScroll));
+        eventDispatcher.dispatch<WindowResizeEvent>(MGL_BIND_FN(ImGuiLayer::onWindowResize));
     }
 
     bool ImGuiLayer::onKeyPressed(KeyPressedEvent& e)
     {
-        return true;
+        return false;
     }
 
     bool ImGuiLayer::onKeyReleased(KeyReleasedEvent& e)
     {
-        return true;
+        return false;
     }
+
+    // bool onKeyTyped(KeyTypedEvent& e)
+    // {
+    //     return true;
+    // }
 
     bool ImGuiLayer::onMouseButtonPressed(MouseButtonPressedEvent& e)
     {
         ImGuiIO &io = ImGui::GetIO();
-        io.AddMouseButtonEvent(e.getMouseButton(), true);
+        io.MouseDown[e.getMouseButton()] = true;
 
         return false;
     }
@@ -66,15 +71,15 @@ namespace mgl
     bool ImGuiLayer::onMouseButtonReleased(MouseButtonReleasedEvent& e)
     {
         ImGuiIO &io = ImGui::GetIO();
-        io.AddMouseButtonEvent(e.getMouseButton(), false);
+        io.MouseDown[e.getMouseButton()] = false;
 
-        return true;
+        return false;
     }
 
     bool ImGuiLayer::onMouseMove(MouseMovedEvent& e)
     {
         ImGuiIO &io = ImGui::GetIO();
-        io.AddMousePosEvent(e.getPos().x, e.getPos().y);
+        io.MousePos = ImVec2(e.getPos().x, e.getPos().y);
 
         return false;
     }
@@ -82,9 +87,15 @@ namespace mgl
     bool ImGuiLayer::onMouseScroll(MouseScrolledEvent& e)
     {
         ImGuiIO &io = ImGui::GetIO();
-        io.AddMouseWheelEvent(e.getOffset().x, e.getOffset().y);
+        io.MouseWheel += e.getOffset().y;
+        io.MouseWheelH += e.getOffset().x;
 
-        return true;
+        return false;
+    }
+
+    bool onWindowResize(WindowResizeEvent& e)
+    {
+        return false;
     }
 
 
