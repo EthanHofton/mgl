@@ -27,6 +27,10 @@ namespace mgl
     OSXWindow::OSXWindow(const windowProps& t_props)
     {
         init(t_props);
+
+        int w, h;
+        glfwGetWindowSize(m_window, &w, &h);
+        MGL_CORE_INFO("Window Size: ({}, {})", w, h);
     }
 
     OSXWindow::~OSXWindow()
