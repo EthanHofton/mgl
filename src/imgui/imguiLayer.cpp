@@ -86,6 +86,8 @@ namespace mgl
 
     void ImGuiLayer::onAttach()
     {
+        MGL_CORE_INFO("WINDOW SIZE ({}, {})", Application::get().getWindow().getSize().x, Application::get().getWindow().getSize().y);
+
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
