@@ -2,6 +2,8 @@
 #include <mgl/core/application.hpp>
 #include <mgl/events/mouseEvent.hpp>
 
+#include <GL/glew.h>
+
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 namespace mgl
@@ -54,6 +56,9 @@ namespace mgl
     {
         while (m_running)
         {
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClearColor(0, 0, 0, 1);
+
             // * loop through each layer and call on update
             for (Layer *layer : m_layerStack)
             {
