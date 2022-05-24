@@ -93,7 +93,7 @@ namespace mgl
         return false;
     }
 
-    bool onWindowResize(WindowResizeEvent& e)
+    bool ImGuiLayer::onWindowResize(WindowResizeEvent& e)
     {
         return false;
     }
