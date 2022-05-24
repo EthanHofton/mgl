@@ -56,14 +56,15 @@ namespace mgl
     {
         while (m_running)
         {
-            glClearColor(0, 0, 0, 1);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // * loop through each layer and call on update
             for (Layer *layer : m_layerStack)
             {
                 layer->onUpdate();
             }
+            
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClearColor(0, 0, 0, 1);
 
             m_window->onUpdate();
         }
