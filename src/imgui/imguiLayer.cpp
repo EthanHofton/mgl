@@ -21,6 +21,10 @@ namespace mgl
         Application& app = Application::get();
         io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
 
+        double current_time = glfwGetTime();
+        io.DeltaTime = m_time > 0.0 ? (float)(current_time - m_time) : (float)(1.0f / 60.0f);
+        m_time = current_time;
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 

@@ -28,6 +28,8 @@ namespace mgl
         bool onMouseButtonReleased(MouseButtonReleasedEvent& e);
         bool onMouseMove(MouseMovedEvent& e);
         bool onMouseScroll(MouseScrolledEvent& e);
+
+        float m_time = 0.0f;
     };
 }
 
