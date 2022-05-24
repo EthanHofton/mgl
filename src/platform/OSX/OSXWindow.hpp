@@ -1,6 +1,8 @@
 #ifndef OSXWindow_hpp
 #define OSXWindow_hpp
 
+#ifdef MGL_PLATFORM_OSX
+
 #include <mgl/mglpch.hpp>
 #include <mgl/core/window.hpp>
 
@@ -62,5 +64,7 @@ namespace mgl
         windowData m_data;
     };
 }
+
+#endif
 
 #endif

@@ -1,6 +1,8 @@
 #include <mgl/mglpch.hpp>
 #include "OSXWindow.hpp"
 
+#ifdef MGL_PLATFORM_OSX
+
 #include <mgl/events/keyEvent.hpp>
 #include <mgl/events/applicationEvent.hpp>
 #include <mgl/events/mouseEvent.hpp>
@@ -216,3 +218,5 @@ namespace mgl
         return m_data.m_vsync;
     }
 }
+
+#endif

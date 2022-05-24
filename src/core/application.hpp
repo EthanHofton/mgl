@@ -33,6 +33,12 @@ namespace mgl
         // * push an overlay to the layer stack
         void pushOverlay(Layer* t_overlay);
 
+        // * get window function
+        inline Window& getWindow() { *m_window; }
+
+        // * application getter
+        inline static Application& get() { return *s_instance; }
+
     private:
 
         bool onWindowClose(WindowCloseEvent& e);
@@ -46,6 +52,9 @@ namespace mgl
 
         // * layer stack
         LayerStack m_layerStack;
+
+        // * instance for singleton
+        static Application* s_instance;
     };
 
     // * decliration of createApplication to be defined by client

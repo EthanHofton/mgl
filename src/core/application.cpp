@@ -2,13 +2,17 @@
 #include <mgl/core/application.hpp>
 #include <mgl/events/mouseEvent.hpp>
 
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
 namespace mgl
 {
-
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+    Application* Application::s_instance = nullptr;
 
     Application::Application()
     {
+        MGL_CORE_ASSERT(!s_instance, "Cannot create application twice")
+        s_instance = this;
+
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(BIND_EVENT_FN(onEvent));
     }
