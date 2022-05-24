@@ -191,7 +191,7 @@ namespace mgl
             int glewSucces = glewInit();
             MGL_CORE_ASSERT(glewSucces == GLEW_OK, "GLEW Error: Could not initialize");
 
-            MGL_CORE_INFO("GLEW Init. OpenGL Version: {}", std::string(glGetString(GL_VERSION)));
+            std::cout << glGetString(GL_VERSION) << std::endl;
 
             s_GLEWInit = true;
         }
