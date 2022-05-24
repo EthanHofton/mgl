@@ -6,11 +6,6 @@
 #include <GLFW/glfw3.h>
 
 #include <mgl/core/application.hpp>
-#include <mgl/events/applicationEvent.hpp>
-#include <mgl/events/keyEvent.hpp>
-#include <mgl/events/mouseEvent.hpp>
-
-#include <mgl/mglpch.hpp>
 
 #define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 

@@ -2,6 +2,9 @@
 #define imguiLayer_hpp
 
 #include <mgl/core/layer.hpp>
+#include <mgl/events/applicationEvent.hpp>
+#include <mgl/events/keyEvent.hpp>
+#include <mgl/events/mouseEvent.hpp>
 
 namespace mgl
 {
