@@ -70,7 +70,7 @@ namespace mgl
     bool ImGuiLayer::onMouseMove(MouseMovedEvent& e)
     {
         ImGuiIO &io = ImGui::GetIO();
-        io.AddMouseButtonEvent(e.getPos().x, e.getPos().y);
+        io.AddMousePosEvent(e.getPos().x, e.getPos().y);
 
         return false;
     }
