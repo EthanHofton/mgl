@@ -3,11 +3,9 @@
 
 #include <mgl/mglpch.hpp>
 #include <mgl/core/window.hpp>
-#include <GLFW/glfw3.h>
 
-#include <mgl/events/keyEvent.hpp>
-#include <mgl/events/applicationEvent.hpp>
-#include <mgl/events/mouseEvent.hpp>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 
 namespace mgl
 {

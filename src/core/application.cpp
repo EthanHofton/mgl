@@ -33,8 +33,6 @@ namespace mgl
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
-        MGL_CORE_TRACE("{}", e);
-
         // * propagate the event down the layer stack
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {

@@ -11,9 +11,9 @@ CXXFLAGS += -DMGL_PLATFORM_OSX
 CXXFLAGS += -DMGL_ENABLE_ASSERTS
 
 # dynamicly link to GLEW
-LDFLAGS += -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
+LDFLAGS = -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
 # statically link to glfw
-LDFLAGS = -Llib/glfw/bin/src/ -lglfw3
+LDFLAGS += -Llib/glfw/bin/src/ -lglfw3
 # additional framework dependencies
 LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 

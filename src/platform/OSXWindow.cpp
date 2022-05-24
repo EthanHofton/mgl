@@ -1,9 +1,16 @@
 #include <mgl/mglpch.hpp>
 #include "OSXWindow.hpp"
 
+#include <mgl/events/keyEvent.hpp>
+#include <mgl/events/applicationEvent.hpp>
+#include <mgl/events/mouseEvent.hpp>
+
+#include <GL/glew.h>
+
 namespace mgl
 {
     static bool s_GLFWInit = false;
+    static bool s_GLEWInit = false;
 
     static void GLFWErrorCallback(int t_error, const char* t_description)
     {
@@ -172,6 +179,18 @@ namespace mgl
             // * run the window event callback function with the created event
             wdata.m_eventCallback(event);
         });
+
+        if (!s_GLEWInit)
+        {
+            // * initalise glew
+            glewExperimental = GL_TRUE;
+
+            // * initalize glew
+            int glewSucces = glewInit();
+            MGL_CORE_ASSERT(glewSucces == GLEW_OK, "GLEW Error: Could not initialize");
+
+            s_GLEWInit = true;
+        }
     }
 
     void OSXWindow::quit()

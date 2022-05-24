@@ -17,11 +17,13 @@ namespace mgl
 
     void LayerStack::pushLayer(Layer* t_layer)
     {
+        t_layer->onAttach();
         m_layerInsert = m_layers.emplace(m_layerInsert, t_layer);
     }
 
     void LayerStack::pushOverlay(Layer *t_overlay)
     {
+        t_overlay->onAttach();
         m_layers.emplace_back(t_overlay);
     }
 
@@ -30,6 +32,7 @@ namespace mgl
         auto it = std::find(m_layers.begin(), m_layerInsert, t_layer);
         if (it != m_layers.end())
         {
+            t_layer->onDetach();
             m_layers.erase(it);
             m_layerInsert--;
         }
@@ -40,6 +43,7 @@ namespace mgl
         auto it = std::find(m_layerInsert, m_layers.end(), t_overlay);
         if (it != m_layers.end())
         {
+            t_overlay->onDetach();
             m_layers.erase(it);
         }
     }
