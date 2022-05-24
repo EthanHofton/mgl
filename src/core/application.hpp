@@ -34,7 +34,7 @@ namespace mgl
         void pushOverlay(Layer* t_overlay);
 
         // * get window function
-        inline Window& getWindow() { *m_window; }
+        inline Window& getWindow() { return *m_window; }
 
         // * application getter
         inline static Application& get() { return *s_instance; }

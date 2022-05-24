@@ -91,7 +91,7 @@
 
 #include <imgui/imgui.h>
 #include <GL/glew.h>
-#include "imguiOpenGLRenderer.h"
+#include "imguiOpenGLRenderer.hpp"
 #include <stdio.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
 #include <stddef.h>     // intptr_t

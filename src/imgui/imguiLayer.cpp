@@ -3,7 +3,7 @@
 
 #include <imgui/imgui.h>
 #include <mgl/platform/OpenGL/imguiOpenGLRenderer.hpp>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <mgl/core/application.hpp>
 
