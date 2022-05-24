@@ -26,6 +26,8 @@ namespace mgl
 
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::get();
+
+        std::cout << app.getWindow().getSize().x << ", " << app.getWindow().getSize().y << std::endl;
         
         io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
 
