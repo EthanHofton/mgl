@@ -56,8 +56,6 @@ namespace mgl
         ImGuiIO &io = ImGui::GetIO();
         io.AddMouseButtonEvent(e.getMouseButton(), true);
 
-        MGL_CORE_INFO("ImGuiLayer Event: {}", *(Event*)(&e));
-
         return false;
     }
 
@@ -71,7 +69,10 @@ namespace mgl
 
     bool ImGuiLayer::onMouseMove(MouseMovedEvent& e)
     {
-        return true;
+        ImGuiIO &io = ImGui::GetIO();
+        io.AddMouseButtonEvent(e.getPos().x, e.getPos().y);
+
+        return false;
     }
 
     bool ImGuiLayer::onMouseScroll(MouseScrolledEvent& e)
