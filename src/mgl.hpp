@@ -23,5 +23,6 @@
 
 // * layers
 #include "core/layer.hpp"
+#include "imgui/imguiLayer.hpp"
 
 #endif
