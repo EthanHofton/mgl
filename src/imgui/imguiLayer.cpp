@@ -58,7 +58,7 @@ namespace mgl
 
         MGL_CORE_INFO("ImGuiLayer Event: {}", *(Event*)(&e));
 
-        return true;
+        return false;
     }
 
     bool ImGuiLayer::onMouseButtonReleased(MouseButtonReleasedEvent& e)
