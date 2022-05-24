@@ -21,15 +21,12 @@ namespace mgl
 
     void ImGuiLayer::onUpdate()
     {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui::NewFrame();
-
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::get();
-
-        std::cout << app.getWindow().getSize().x << ", " << app.getWindow().getSize().y << std::endl;
-        
         io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui::NewFrame();
 
         ImGui::ShowDemoWindow();
 
@@ -75,7 +72,7 @@ namespace mgl
         io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
         io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-        ImGui_ImplOpenGL3_Init("#version 400");
+        ImGui_ImplOpenGL3_Init("#version 410");
     }
 
     void ImGuiLayer::onDetach()
