@@ -19,7 +19,12 @@ namespace mgl
 
     private:
 
-
+        bool onKeyPressed(KeyPressedEvent& e);
+        bool onKeyReleased(KeyReleasedEvent& e);
+        bool onMouseButtonPressed(MouseButtonPressedEvent& e);
+        bool onMouseButtonReleased(MouseButtonReleasedEvent& e);
+        bool onMouseMove(MouseMovedEvent& e);
+        bool onMouseScroll(MouseScrolledEvent& e);
     };
 }
 

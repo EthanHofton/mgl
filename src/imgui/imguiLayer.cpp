@@ -6,18 +6,19 @@
 #include <GLFW/glfw3.h>
 
 #include <mgl/core/application.hpp>
+#include <mgl/events/applicationEvent.hpp>
+#include <mgl/events/keyEvent.hpp>
+#include <mgl/events/mouseEvent.hpp>
+
+#include <mgl/mglpch.hpp>
+
+#define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 namespace mgl
 {
-    ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer")
-    {
+    ImGuiLayer::ImGuiLayer() : Layer("ImGui Layer") {}
 
-    }
-
-    ImGuiLayer::~ImGuiLayer()
-    {
-        
-    }
+    ImGuiLayer::~ImGuiLayer() {}
 
     void ImGuiLayer::onUpdate()
     {
@@ -36,8 +37,54 @@ namespace mgl
 
     void ImGuiLayer::onEvent(Event &e)
     {
-        
+        EventDispatcher eventDispatcher(e);
+        eventDispatcher.dispatch<KeyPressedEvent>(BIND_FN(ImGuiLayer::onKeyPressed));
+        eventDispatcher.dispatch<KeyReleasedEvent>(BIND_FN(ImGuiLayer::onKeyReleased));
+        eventDispatcher.dispatch<MouseButtonPressedEvent>(BIND_FN(ImGuiLayer::onMouseButtonPressed));
+        eventDispatcher.dispatch<MouseButtonReleasedEvent>(BIND_FN(ImGuiLayer::onMouseButtonReleased));
+        eventDispatcher.dispatch<MouseMovedEvent>(BIND_FN(ImGuiLayer::onMouseMove));
+        eventDispatcher.dispatch<MouseScrolledEvent>(BIND_FN(ImGuiLayer::onMouseScroll));
     }
+
+    bool ImGuiLayer::onKeyPressed(KeyPressedEvent& e)
+    {
+        return true;
+    }
+
+    bool ImGuiLayer::onKeyReleased(KeyReleasedEvent& e)
+    {
+        return true;
+    }
+
+    bool ImGuiLayer::onMouseButtonPressed(MouseButtonPressedEvent& e)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.AddMouseButtonEvent(e.getMouseButton(), true);
+
+        return true;
+    }
+
+    bool ImGuiLayer::onMouseButtonReleased(MouseButtonReleasedEvent& e)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.AddMouseButtonEvent(e.getMouseButton(), false);
+
+        return true;
+    }
+
+    bool ImGuiLayer::onMouseMove(MouseMovedEvent& e)
+    {
+        return true;
+    }
+
+    bool ImGuiLayer::onMouseScroll(MouseScrolledEvent& e)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        io.AddMouseWheelEvent(e.getOffset().x, e.getOffset().y);
+
+        return true;
+    }
+
 
     void ImGuiLayer::onAttach()
     {
