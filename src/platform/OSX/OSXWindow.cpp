@@ -60,6 +60,10 @@ namespace mgl
             s_GLFWInit = true;
         }
 
+        // * define the version and compatibilty settings
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+
         // * create a new GLFW window
         m_window = glfwCreateWindow((int)m_data.m_size.x, (int)m_data.m_size.y, m_data.m_title.c_str(), nullptr, nullptr);
         // * set the current context to the window
@@ -67,6 +71,7 @@ namespace mgl
         // * set the user pointer to the window data struct
         // * this is so that when event callbacks are run, we have access to the window data
         glfwSetWindowUserPointer(m_window, &m_data);
+
         // * turn on vsync
         setVSync(true);
 
