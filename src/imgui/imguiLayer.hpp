@@ -30,10 +30,6 @@ namespace mgl
         bool onMouseMove(MouseMovedEvent& e);
         bool onMouseScroll(MouseScrolledEvent& e);
         bool onWindowResize(WindowResizeEvent& e);
-
-    private:
-
-        float m_time = 0.0f;
     };
 }
 

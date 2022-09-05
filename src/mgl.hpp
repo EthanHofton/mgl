@@ -5,6 +5,7 @@
 
 // * mgl main application
 #include "core/application.hpp"
+#include "core/timer.hpp"
 
 // * entry point
 #include "core/entryPoint.hpp"

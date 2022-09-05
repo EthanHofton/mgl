@@ -7,6 +7,7 @@
 #include "layerStack.hpp"
 #include "core.hpp"
 #include "window.hpp"
+#include "timer.hpp"
 
 namespace mgl
 {
@@ -39,6 +40,9 @@ namespace mgl
         // * application getter
         inline static Application& get() { return *s_instance; }
 
+        // * Timer getter
+        inline static Timer& getTimer() { return *(s_instance->m_timer); }
+
     private:
 
         bool onWindowClose(WindowCloseEvent& e);
@@ -52,6 +56,9 @@ namespace mgl
 
         // * layer stack
         LayerStack m_layerStack;
+
+        // * timer
+        Timer *m_timer;
 
         // * instance for singleton
         static Application* s_instance;

@@ -13,13 +13,18 @@ namespace mgl
         MGL_CORE_ASSERT(!s_instance, "Cannot create application twice")
         s_instance = this;
 
+        m_timer = new Timer();
+        
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(MGL_BIND_FN(Application::onEvent));
+
+        // disable vsync to lock to custom frame rate
+        m_window->setVSync(false);
     }
 
     Application::~Application()
     {
-
+        delete m_timer;
     }
 
     void Application::pushLayer(Layer* t_layer)
@@ -54,17 +59,25 @@ namespace mgl
     {
         while (m_running)
         {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glClearColor(0, 0, 0, 1);
+            m_timer->tick();
 
-            // * loop through each layer and call on update
-            for (Layer *layer : m_layerStack)
+            // * lock to FPS
+            if (m_timer->getDeltaTime() >= 1.0 / 120.0)
             {
-                layer->onUpdate();
-            }
-            
+                m_timer->reset();
 
-            m_window->onUpdate();
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glClearColor(0, 0, 0, 1);
+
+                // * loop through each layer and call on update
+                for (Layer *layer : m_layerStack)
+                {
+                    layer->onUpdate();
+                }
+
+                m_window->onUpdate();
+
+            }
         }
     }
 
