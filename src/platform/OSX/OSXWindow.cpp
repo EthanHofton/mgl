@@ -138,6 +138,16 @@ namespace mgl
             }
         });
 
+        // * glfw char callback
+        glfwSetCharCallback(m_window, [](GLFWwindow *t_window, unsigned int t_char)
+        {
+            // * get the user data from the windows
+            windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+
+            KeyTypedEvent event(t_char);
+            wdata.m_eventCallback(event);
+        });
+
         // * glfw mouse event callback
         glfwSetMouseButtonCallback(m_window, [](GLFWwindow* t_window, int t_button, int t_action, int t_mods)
         {

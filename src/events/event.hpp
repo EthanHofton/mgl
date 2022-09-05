@@ -15,7 +15,7 @@ namespace mgl
         none = 0,                                                               // * none event
         windowClose, windowResize, windowFocus, windowLostFocus, windowMoved,   // * application event
         appTick, appUpdate, appDraw,                                            // * update event
-        keyPressed, keyReleased,                                                // * key event
+        keyPressed, keyTyped, keyReleased,                                      // * key event
         mouseButtonPressed, mouseButtonReleased, mouseMoved, mouseScrolled      // * mouse event
     };
 

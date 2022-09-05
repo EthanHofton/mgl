@@ -3,9 +3,14 @@
 
 #include <imgui/imgui.h>
 #include <mgl/platform/OpenGL/imguiOpenGLRenderer.hpp>
-#include <GLFW/glfw3.h>
+
+#include <mgl/core/keyCodes.hpp>
 
 #include <mgl/core/application.hpp>
+
+// * only used for glfwGetTime()
+// * get rid of this
+#include <GLFW/glfw3.h>
 
 namespace mgl
 {
@@ -37,7 +42,7 @@ namespace mgl
         EventDispatcher eventDispatcher(e);
         eventDispatcher.dispatch<KeyPressedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyPressed));
         eventDispatcher.dispatch<KeyReleasedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyReleased));
-        // eventDispatcher.dispatch<KeyTypedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyTyped));
+        eventDispatcher.dispatch<KeyTypedEvent>(MGL_BIND_FN(ImGuiLayer::onKeyTyped));
         eventDispatcher.dispatch<MouseButtonPressedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseButtonPressed));
         eventDispatcher.dispatch<MouseButtonReleasedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseButtonReleased));
         eventDispatcher.dispatch<MouseMovedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseMove));
@@ -47,18 +52,36 @@ namespace mgl
 
     bool ImGuiLayer::onKeyPressed(KeyPressedEvent& e)
     {
+        ImGuiIO &io = ImGui::GetIO();
+        io.KeysDown[e.getKeyCode()] = true;
+
+        io.KeyCtrl = io.KeysDown[MGL_KEY_LEFT_CONTROL] || io.KeysDown[MGL_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[MGL_KEY_LEFT_SHIFT] || io.KeysDown[MGL_KEY_RIGHT_SHIFT];
+        io.KeyAlt = io.KeysDown[MGL_KEY_LEFT_ALT] || io.KeysDown[MGL_KEY_RIGHT_ALT];
+        io.KeySuper = io.KeysDown[MGL_KEY_LEFT_SUPER] || io.KeysDown[MGL_KEY_RIGHT_SUPER];
+
         return false;
     }
 
     bool ImGuiLayer::onKeyReleased(KeyReleasedEvent& e)
     {
+        ImGuiIO &io = ImGui::GetIO();
+        io.KeysDown[e.getKeyCode()] = false;
+
         return false;
     }
 
-    // bool onKeyTyped(KeyTypedEvent& e)
-    // {
-    //     return true;
-    // }
+    bool ImGuiLayer::onKeyTyped(KeyTypedEvent& e)
+    {
+        ImGuiIO &io = ImGui::GetIO();
+        int keycode = e.getKeyCode();
+        if (keycode > 0 && keycode < 0x10000)
+        {
+            io.AddInputCharacter((unsigned short)keycode);
+        }
+
+        return true;
+    }
 
     bool ImGuiLayer::onMouseButtonPressed(MouseButtonPressedEvent& e)
     {
@@ -95,6 +118,10 @@ namespace mgl
 
     bool ImGuiLayer::onWindowResize(WindowResizeEvent& e)
     {
+        ImGuiIO &io = ImGui::GetIO();
+        io.DisplaySize = ImVec2(e.getSize().x, e.getSize().y);
+        io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+
         return false;
     }
 
@@ -108,29 +135,27 @@ namespace mgl
         io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-        // * TEMP
-        // * should use mgl key code
-        io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-        io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-        io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-        io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-        io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-        io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-        io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-        io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-        io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-        io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-        io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-        io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-        io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-        io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-        io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-        io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-        io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-        io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-        io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-        io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-        io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+        io.KeyMap[ImGuiKey_Tab] = MGL_KEY_TAB;
+        io.KeyMap[ImGuiKey_LeftArrow] = MGL_KEY_LEFT;
+        io.KeyMap[ImGuiKey_RightArrow] = MGL_KEY_RIGHT;
+        io.KeyMap[ImGuiKey_UpArrow] = MGL_KEY_UP;
+        io.KeyMap[ImGuiKey_DownArrow] = MGL_KEY_DOWN;
+        io.KeyMap[ImGuiKey_PageUp] = MGL_KEY_PAGE_UP;
+        io.KeyMap[ImGuiKey_PageDown] = MGL_KEY_PAGE_DOWN;
+        io.KeyMap[ImGuiKey_Home] = MGL_KEY_HOME;
+        io.KeyMap[ImGuiKey_End] = MGL_KEY_END;
+        io.KeyMap[ImGuiKey_Insert] = MGL_KEY_INSERT;
+        io.KeyMap[ImGuiKey_Delete] = MGL_KEY_DELETE;
+        io.KeyMap[ImGuiKey_Backspace] = MGL_KEY_BACKSPACE;
+        io.KeyMap[ImGuiKey_Space] = MGL_KEY_SPACE;
+        io.KeyMap[ImGuiKey_Enter] = MGL_KEY_ENTER;
+        io.KeyMap[ImGuiKey_Escape] = MGL_KEY_ESCAPE;
+        io.KeyMap[ImGuiKey_A] = MGL_KEY_A;
+        io.KeyMap[ImGuiKey_C] = MGL_KEY_C;
+        io.KeyMap[ImGuiKey_V] = MGL_KEY_V;
+        io.KeyMap[ImGuiKey_X] = MGL_KEY_X;
+        io.KeyMap[ImGuiKey_Y] = MGL_KEY_Y;
+        io.KeyMap[ImGuiKey_Z] = MGL_KEY_Z;
 
         ImGui_ImplOpenGL3_Init("#version 410");
     }

@@ -24,7 +24,7 @@ namespace mgl
 
         bool onKeyPressed(KeyPressedEvent& e);
         bool onKeyReleased(KeyReleasedEvent& e);
-        // bool onKeyTyped(KeyTypedEvent& e);
+        bool onKeyTyped(KeyTypedEvent& e);
         bool onMouseButtonPressed(MouseButtonPressedEvent& e);
         bool onMouseButtonReleased(MouseButtonReleasedEvent& e);
         bool onMouseMove(MouseMovedEvent& e);

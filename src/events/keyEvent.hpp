@@ -60,6 +60,29 @@ namespace mgl
         int m_repeteCount;
     };
 
+    // * event for a key typed
+    // * inherits from key event
+    class KeyTypedEvent : public KeyEvent
+    {
+    public:
+
+        // * key pressed event constructor
+        KeyTypedEvent(int t_keycode) : KeyEvent(t_keycode) {}
+
+        // * implimentation of the toString method
+        std::string toString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << m_keyCode;
+            return ss.str();
+        }
+
+        // * impliments all pure virtual functions
+        // * impliments with type as eventType::keyPressed
+        // * impliments functions getEventType() and getName() aswell as creating getStaticType()
+        EVENT_CLASS_TYPE(keyTyped);
+    };
+
     // * event for a key release
     // * inherits from key event
     class KeyReleasedEvent : public KeyEvent
