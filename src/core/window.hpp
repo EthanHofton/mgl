@@ -53,6 +53,9 @@ namespace mgl
         // * check if the window is using vsync
         virtual bool isVSync() const = 0;
 
+        // * get the native window from the pre platform implamentation
+        virtual void* getNativeWindow() const = 0;
+
         // * create function must be implimented per platform
         static Window* create(const windowProps& t_props = windowProps());
     };

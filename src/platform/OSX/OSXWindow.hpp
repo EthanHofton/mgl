@@ -33,6 +33,8 @@ namespace mgl
         // * check vsync function implimentation
         bool isVSync() const override;
 
+        virtual inline void* getNativeWindow() const override { return (void*)m_window; }
+
     private:
 
         // * window initalisztion done here

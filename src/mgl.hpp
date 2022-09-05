@@ -20,9 +20,14 @@
 
 // * window
 #include "core/window.hpp"
+#include "core/input.hpp"
 
 // * layers
 #include "core/layer.hpp"
 #include "imgui/imguiLayer.hpp"
+
+// * codes
+#include "core/mouseButtonCodes.hpp"
+#include "core/keyCodes.hpp"
 
 #endif

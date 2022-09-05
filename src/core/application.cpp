@@ -4,8 +4,6 @@
 
 #include <GL/glew.h>
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 namespace mgl
 {
     Application* Application::s_instance = nullptr;
@@ -16,7 +14,7 @@ namespace mgl
         s_instance = this;
 
         m_window = std::unique_ptr<Window>(Window::create());
-        m_window->setEventCallback(BIND_EVENT_FN(onEvent));
+        m_window->setEventCallback(MGL_BIND_FN(Application::onEvent));
     }
 
     Application::~Application()
@@ -37,7 +35,7 @@ namespace mgl
     void Application::onEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+        dispatcher.dispatch<WindowCloseEvent>(MGL_BIND_FN(Application::onWindowClose));
 
         // * propagate the event down the layer stack
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
