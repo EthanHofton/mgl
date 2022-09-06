@@ -34,6 +34,11 @@ namespace mgl
         // * push an overlay to the layer stack
         void pushOverlay(Layer* t_overlay);
 
+        // * pop a layer onto the layerstack
+        void popLayer(Layer* t_layer);
+        // * pop an overlay to the layer stack
+        void popOverlay(Layer* t_overlay);
+
         // * get window function
         inline Window& getWindow() { return *m_window; }
 

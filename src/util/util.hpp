@@ -39,11 +39,6 @@ namespace mgl
         
     private:
         
-        // * private read file function
-        std::string getFile(std::string t_filename);
-        
-    private:
-        
         // * static instance
         static Config* s_instance;
         
@@ -170,6 +165,10 @@ namespace mgl
         std::shared_ptr<spdlog::logger> m_coreConsoleLogger;
         std::shared_ptr<spdlog::logger> m_clientConsoleLogger;
     };
+
+    // * universal read file util function
+    std::string readFile(std::string t_filename);
+    std::string readFileWithNewline(std::string t_filename);
 
     // * core logger macros
     #define MGL_CORE_TRACE(...) mgl::Logger::instance()->coreTrace(__VA_ARGS__)

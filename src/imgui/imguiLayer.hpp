@@ -20,6 +20,8 @@ namespace mgl
         void onAttach() override;
         void onDetach() override;
 
+        inline virtual void draw() {}
+
     private:
 
         bool onKeyPressed(KeyPressedEvent& e);

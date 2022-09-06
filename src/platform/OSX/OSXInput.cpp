@@ -1,6 +1,8 @@
 #include <mgl/mglpch.hpp>
 #include "OSXInput.hpp"
 
+#ifdef MGL_PLATFORM_OSX
+
 #include <GLFW/glfw3.h>
 #include <mgl/core/application.hpp>
 
@@ -62,3 +64,5 @@ namespace mgl
     }
 
 }
+
+#endif

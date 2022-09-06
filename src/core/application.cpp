@@ -37,6 +37,16 @@ namespace mgl
         m_layerStack.pushOverlay(t_overlay);
     }
 
+    void Application::popLayer(Layer* t_layer)
+    {
+        m_layerStack.popLayer(t_layer);
+    }
+
+    void Application::popOverlay(Layer* t_overlay)
+    {
+        m_layerStack.popOverlay(t_overlay);
+    }
+
     void Application::onEvent(Event& e)
     {
         EventDispatcher dispatcher(e);

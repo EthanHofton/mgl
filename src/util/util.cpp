@@ -30,8 +30,8 @@ namespace mgl
         std::string loggerConfigFile = "config/loggerConfig.json";
         std::string gameConfigFile = "config/gameConfig.json";
         
-        m_loggerConifg.Parse(getFile(loggerConfigFile).c_str());
-        m_gameConfig.Parse(getFile(gameConfigFile).c_str());
+        m_loggerConifg.Parse(readFile(loggerConfigFile).c_str());
+        m_gameConfig.Parse(readFile(gameConfigFile).c_str());
     }
 
     Config::~Config()
@@ -42,7 +42,7 @@ namespace mgl
         spdlog::drop("APP");
     }
     
-    std::string Config::getFile(std::string t_filename)
+    std::string readFile(std::string t_filename)
     {
         std::string line;
         std::string output;
@@ -53,6 +53,22 @@ namespace mgl
         while (std::getline(file, line))
         {
             output.append(line);
+        }
+        
+        return output;
+    }
+
+    std::string readFileWithNewline(std::string t_filename)
+    {
+        std::string line;
+        std::string output;
+        std::ifstream file(t_filename);
+        
+        assert(file.is_open());
+        
+        while (std::getline(file, line))
+        {
+            output.append(line + '\n');
         }
         
         return output;
@@ -106,4 +122,6 @@ namespace mgl
         // * log that the loggers were initalised
         coreInfo("loggers initalised");
     }
+
+
 }

@@ -11,6 +11,7 @@ namespace mgl
     {
         for (Layer* layer : m_layers)
         {
+            layer->onDetach();
             delete layer;
         }
     }

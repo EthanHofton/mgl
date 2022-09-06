@@ -3,6 +3,8 @@
 
 #include <mgl/core/input.hpp>
 
+#ifdef MGL_PLATFORM_OSX
+
 namespace mgl
 {
     class OSXInput : public Input
@@ -20,5 +22,7 @@ namespace mgl
         virtual glm::vec2 getMousePosImpl() override;
     };
 }
+
+#endif
 
 #endif

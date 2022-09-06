@@ -48,6 +48,8 @@ namespace mgl
         // * window attribute functions
         // * set the window event callback function
         virtual void setEventCallback(const eventCallback& t_callback) = 0;
+        // * get the event callback function
+        virtual eventCallback& getEventCallback() = 0;
         // * set if the window uses vsync (cap fps)
         virtual void setVSync(bool t_enabled) = 0;
         // * check if the window is using vsync

@@ -28,10 +28,13 @@ namespace mgl
 
         // * set event callback function implimentation
         inline void setEventCallback(const eventCallback& t_callback) override { m_data.m_eventCallback = t_callback; }
+        // * get the event callback function
+        virtual inline eventCallback& getEventCallback() override { return m_data.m_eventCallback; }
         // * set vsync function implimentation
         void setVSync(bool t_enabled) override;
         // * check vsync function implimentation
         bool isVSync() const override;
+        // * get the event call back
 
         virtual inline void* getNativeWindow() const override { return (void*)m_window; }
 

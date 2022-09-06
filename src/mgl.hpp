@@ -31,4 +31,7 @@
 #include "core/mouseButtonCodes.hpp"
 #include "core/keyCodes.hpp"
 
+// * renderer
+#include "renderer/renderer.hpp"
+
 #endif

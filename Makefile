@@ -19,7 +19,7 @@ LDFLAGS += -Llib/imgui/bin/ -limgui
 # additional framework dependencies
 LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 
-SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/**/**/*.cpp)
+SRC = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp) $(wildcard src/**/**/*.cpp) $(wildcard src/**/**/**/*.cpp)
 OBJ = $(SRC:.cpp=.o)
 PROGRAM = mgl
 BIN = bin
@@ -79,7 +79,7 @@ ifeq ($(wildcard src/$(PROGRAM)pch.hpp.gch),)
 endif
 
 $(PROGRAM): $(OBJ)
-	$(CC) -dynamiclib -o $(BIN)/lib$(PROGRAM).dylib -install_name @rpath/lib$(PROGRAM).dylib $^ $(LDFLAGS)
+	$(CC) -dynamiclib -o $(BIN)/lib$(PROGRAM).dylib -install_name @rpath/lib$(PROGRAM).dylib -g $^ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CXXFLAGS) 
