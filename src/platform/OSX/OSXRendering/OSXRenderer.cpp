@@ -2,6 +2,7 @@
 #include "OSXRenderer.hpp"
 #include "OSXRendererDataType.hpp"
 #include "OSXRendererPrimativeType.hpp"
+#include "OSXErrorCheck.hpp"
 
 #ifdef MGL_PLATFORM_OSX
 
@@ -33,7 +34,7 @@ namespace mgl
 
         glGenBuffers(1, &m_IBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-        glBufferData(GL_ARRAY_BUFFER, m_maxIndiceDataSizeBytes, nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_maxIndiceDataSizeBytes, nullptr, GL_DYNAMIC_DRAW);
 
         glGenBuffers(1, &m_VBO);
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -60,18 +61,26 @@ namespace mgl
         // * check if the buffer was resized
         // * if resized, resize the array buffer
         // * if not, update the subdata of the array
+
         if (bufferResized())
         {
-            glBufferData(GL_ARRAY_BUFFER, m_maxVerticeDataSizeBytes, m_verticeData, GL_DYNAMIC_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_maxIndiceDataSizeBytes, m_indiceData, GL_DYNAMIC_DRAW);
+
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+            glBufferData(GL_ARRAY_BUFFER, m_maxVerticeDataSizeBytes, m_verticeData, GL_DYNAMIC_DRAW);
         }
         else
         {
-            glBufferSubData(GL_ARRAY_BUFFER, 0, m_verticeDataSizeBytes, m_verticeData);
-            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_indiceDataSizeBytes, m_indiceData);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_indiceDataPointer, m_indiceData);
+
+            glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_verticeDataPointer, m_verticeData);
         }
 
         m_shader->useShader();
+
         // * TODO: bind textures here
         // * TODO: bind UBOs here
 
@@ -90,8 +99,11 @@ namespace mgl
             glEnable(GL_CULL_FACE);
         }
 
+        std::vector<unsigned int> indicies((unsigned int*)(m_indiceData), (unsigned int*)((char *)m_indiceData + m_indiceDataPointer));
+        std::vector<unsigned int> vertices((float*)(m_verticeData), (float*)((char *)m_verticeData + m_verticeDataPointer));
+
         // * draw elements
-        glDrawElements(MGLPrimativeType2GL(m_options.m_primativeType), (int)m_indiceDataSizeBytes / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+        glDrawElements(MGLPrimativeType2GL(m_options.m_primativeType), (int)m_indiceDataPointer / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
         // * disabled wireframe if enabled
         if (m_options.m_wireframeMode)

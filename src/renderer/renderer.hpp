@@ -61,12 +61,13 @@ namespace mgl
 
         void* m_verticeData;
         void* m_indiceData;
+        int m_verticeDataPointer;
+        int m_indiceDataPointer;
 
         int m_maxVerticeDataSizeBytes;
         int m_maxIndiceDataSizeBytes;
 
-        int m_verticeDataSizeBytes;
-        int m_indiceDataSizeBytes;
+        int m_indiceOffset;
 
         bool m_bufferResized;
     };

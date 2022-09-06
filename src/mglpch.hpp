@@ -10,6 +10,7 @@
 #include <fstream>
 #include <cassert>
 #include <signal.h>
+#include <csignal>
 
 // * data structors
 #include <string>

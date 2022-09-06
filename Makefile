@@ -79,10 +79,10 @@ ifeq ($(wildcard src/$(PROGRAM)pch.hpp.gch),)
 endif
 
 $(PROGRAM): $(OBJ)
-	$(CC) -dynamiclib -o $(BIN)/lib$(PROGRAM).dylib -install_name @rpath/lib$(PROGRAM).dylib -g $^ $(LDFLAGS)
+	$(CC) -g -dynamiclib -o $(BIN)/lib$(PROGRAM).dylib -install_name @rpath/lib$(PROGRAM).dylib $^ $(LDFLAGS)
 
 %.o: %.cpp
-	$(CC) -o $@ -c $< $(CXXFLAGS) 
+	$(CC) -g -o $@ -c $< $(CXXFLAGS) 
 
 clean:
 	rm -rf $(BIN) $(OBJ)
