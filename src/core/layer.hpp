@@ -26,6 +26,8 @@ namespace mgl
         virtual void onUpdate() {}
         // * called when an event is sent to the layer via the event dispatcher
         virtual void onEvent(Event& t_event) {}
+        // * called when imgui is rendering
+        virtual void onImGuiRender() {}
 
         // layer debug name getter
         inline const std::string& getName() { return m_debugName; }

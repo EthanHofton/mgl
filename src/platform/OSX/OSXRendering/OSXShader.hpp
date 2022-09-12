@@ -29,6 +29,7 @@ namespace mgl
         void setUniform3f(std::string t_uniformId, glm::vec3 t_val);
         void setUniform4i(std::string t_uniformId, glm::ivec4 t_val);
         void setUniform4f(std::string t_uniformId, glm::vec4 t_val);
+        void setUniformMatrix4fv(std::string t_uniformId, glm::mat4 t_val);
 
         void useShader();
 
@@ -66,6 +67,7 @@ namespace mgl
         std::map<std::string, glm::vec3>  m_uniform3fMap;
         std::map<std::string, glm::ivec4> m_uniform4iMap;
         std::map<std::string, glm::vec4>  m_uniform4fMap;
+        std::map<std::string, glm::mat4>  m_uniformMatrix4fvMap;
 
         void compileShader();
         void addShader(const char *t_shaderCode, GLenum t_shaderType);

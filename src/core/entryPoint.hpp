@@ -4,6 +4,7 @@
 #ifdef MGL_PLATFORM_OSX
 
 #include <mgl/mglpch.hpp>
+#include <mgl/core/application.hpp>
 
 // * define an external function for the clinent to create the main application
 extern mgl::Application* mgl::createApplication();

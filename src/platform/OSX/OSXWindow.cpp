@@ -40,6 +40,7 @@ namespace mgl
         // * set window data title and size
         m_data.m_title = t_props.m_title;
         m_data.m_size = t_props.m_size;
+        m_data.m_firstMouseMove = true;
 
         // * log new window creation
         MGL_CORE_INFO("Creating window {} ({}, {})", m_data.m_title, m_data.m_size.x, m_data.m_size.y);
@@ -192,8 +193,18 @@ namespace mgl
         {
             // * get the user data from the windows
             windowData &wdata = *(windowData*)glfwGetWindowUserPointer(t_window);
+
+            if (wdata.m_firstMouseMove)
+            {
+                wdata.m_lastMousePos = {t_x, t_y};
+                wdata.m_firstMouseMove = false;
+            }
+
+            glm::vec2 mousePosOffset = {t_x - wdata.m_lastMousePos.x, wdata.m_lastMousePos.y - t_y};
+            wdata.m_lastMousePos = {t_x, t_y};
+
             // * create a mouse scroll event
-            MouseMovedEvent event({t_x, t_y});
+            MouseMovedEvent event({t_x, t_y}, mousePosOffset);
             // * run the window event callback function with the created event
             wdata.m_eventCallback(event);
         });
@@ -211,6 +222,12 @@ namespace mgl
 
             s_GLEWInit = true;
         }
+
+        // * set up blending
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_PROGRAM_POINT_SIZE);
     }
 
     void OSXWindow::quit()
@@ -234,6 +251,23 @@ namespace mgl
     bool OSXWindow::isVSync() const
     {
         return m_data.m_vsync;
+    }
+
+    void OSXWindow::setRelativeMouseMouse(bool t_enabled)
+    {
+        if (t_enabled)
+        {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            m_data.m_relativeMouseMode = true;
+        } else {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            m_data.m_relativeMouseMode = false;
+        }
+    }
+
+    bool OSXWindow::isRelativeMouseMode()
+    {
+        return m_data.m_relativeMouseMode;
     }
 }
 

@@ -55,6 +55,11 @@ namespace mgl
         // * check if the window is using vsync
         virtual bool isVSync() const = 0;
 
+        // * set relative mouse mode
+        virtual void setRelativeMouseMouse(bool t_enabled) = 0;
+        // * check relatice mouse mode
+        virtual bool isRelativeMouseMode() = 0;
+
         // * get the native window from the pre platform implamentation
         virtual void* getNativeWindow() const = 0;
 

@@ -2,11 +2,6 @@
 
 namespace mgl
 {
-    LayerStack::LayerStack()
-    {
-        m_layerInsert = m_layers.begin();
-    }
-
     LayerStack::~LayerStack()
     {
         for (Layer* layer : m_layers)
@@ -19,7 +14,8 @@ namespace mgl
     void LayerStack::pushLayer(Layer* t_layer)
     {
         t_layer->onAttach();
-        m_layerInsert = m_layers.emplace(m_layerInsert, t_layer);
+        m_layers.emplace(m_layers.begin() + m_layerInsertIndex, t_layer);
+        m_layerInsertIndex++;
     }
 
     void LayerStack::pushOverlay(Layer *t_overlay)
@@ -30,18 +26,18 @@ namespace mgl
 
     void LayerStack::popLayer(Layer* t_layer)
     {
-        auto it = std::find(m_layers.begin(), m_layerInsert, t_layer);
-        if (it != m_layers.end())
+        auto it = std::find(m_layers.begin(), m_layers.begin() + m_layerInsertIndex, t_layer);
+        if (it != m_layers.begin() + m_layerInsertIndex)
         {
             t_layer->onDetach();
             m_layers.erase(it);
-            m_layerInsert--;
+            m_layerInsertIndex--;
         }
     }
 
     void LayerStack::popOverlay(Layer *t_overlay)
     {
-        auto it = std::find(m_layerInsert, m_layers.end(), t_overlay);
+        auto it = std::find(m_layers.begin() + m_layerInsertIndex, m_layers.end(), t_overlay);
         if (it != m_layers.end())
         {
             t_overlay->onDetach();

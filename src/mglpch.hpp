@@ -25,5 +25,6 @@
 
 // * logger
 #include <mgl/util/util.hpp>
+#include <mgl/core/core.hpp>
 
 #endif

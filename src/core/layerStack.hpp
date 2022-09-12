@@ -15,7 +15,7 @@ namespace mgl
     public:
 
         // * layer stack constructor and destructor
-        LayerStack();
+        LayerStack() = default;
         ~LayerStack();
 
         // * push a layer to the layerstack
@@ -33,12 +33,20 @@ namespace mgl
         // get an reverse iterator to the front of the layer stack
         std::vector<Layer*>::iterator end() { return m_layers.end(); }
 
+        std::vector<Layer*>::reverse_iterator rbegin() { return m_layers.rbegin(); }
+		std::vector<Layer*>::reverse_iterator rend() { return m_layers.rend(); }
+
+        std::vector<Layer*>::const_iterator begin() const { return m_layers.begin(); }
+		std::vector<Layer*>::const_iterator end()	const { return m_layers.end(); }
+		std::vector<Layer*>::const_reverse_iterator rbegin() const { return m_layers.rbegin(); }
+		std::vector<Layer*>::const_reverse_iterator rend() const { return m_layers.rend(); }
+
     private:
 
         // * store the layer stack
         std::vector<Layer*> m_layers;
         // * store an iterator of where to insert into the layer stack
-        std::vector<Layer*>::iterator m_layerInsert;
+        unsigned int m_layerInsertIndex = 0;
     };
 }
 

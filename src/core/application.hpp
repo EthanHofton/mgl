@@ -8,9 +8,19 @@
 #include "core.hpp"
 #include "window.hpp"
 #include "timer.hpp"
+#include <mgl/imgui/imguiLayer.hpp>
+#include <mgl/projection/projection.hpp>
+#include <mgl/projection/orthogrphicProjection.hpp>
+#include <mgl/projection/perspectiveProjection.hpp>
 
 namespace mgl
 {
+    enum ProjectionType
+    {
+        ORTHOGRAPHIC,
+        PERSPECTIVE,
+    };
+
     // * application app
     // * controll the main game loop
     class Application
@@ -18,7 +28,7 @@ namespace mgl
     public:
 
         // * application constructor and descructor
-        Application();
+        Application(ProjectionType t_projectionType);
         // * application destructor needs to be virtual so it can be overrided
         virtual ~Application();
 
@@ -42,11 +52,19 @@ namespace mgl
         // * get window function
         inline Window& getWindow() { return *m_window; }
 
+        // * get the imgui layer
+        inline ImGuiLayer& getImGuiLayer() { return *m_imGuiLayer; }
+
         // * application getter
         inline static Application& get() { return *s_instance; }
 
         // * Timer getter
         inline static Timer& getTimer() { return *(s_instance->m_timer); }
+
+        // static void configureCamera();
+        // inline static void getCamera() {}
+
+        inline static Projection* getProjection() { return s_instance->m_projection; }
 
     private:
 
@@ -64,9 +82,15 @@ namespace mgl
 
         // * timer
         Timer *m_timer;
+        // * store the applications projection
+        Projection* m_projection = nullptr;
+
+        // * imgui layer
+        ImGuiLayer *m_imGuiLayer;
 
         // * instance for singleton
         static Application* s_instance;
+
     };
 
     // * decliration of createApplication to be defined by client

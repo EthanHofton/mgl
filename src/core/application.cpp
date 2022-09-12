@@ -8,23 +8,40 @@ namespace mgl
 {
     Application* Application::s_instance = nullptr;
 
-    Application::Application()
+    Application::Application(ProjectionType t_projectionType)
     {
         MGL_CORE_ASSERT(!s_instance, "Cannot create application twice")
         s_instance = this;
 
         m_timer = new Timer();
-        
+
         m_window = std::unique_ptr<Window>(Window::create());
         m_window->setEventCallback(MGL_BIND_FN(Application::onEvent));
 
-        // disable vsync to lock to custom frame rate
+        // * disable vsync to lock to custom frame rate
         m_window->setVSync(false);
+
+        switch (t_projectionType)
+        {
+            case ORTHOGRAPHIC:
+                m_projection = new OrthogrphicProjection();
+                break;
+            case PERSPECTIVE:
+                m_projection = new PerspectiveProjection();
+                break;
+        }
+        
+        m_imGuiLayer = new ImGuiLayer();
+        pushOverlay(m_imGuiLayer);
     }
 
     Application::~Application()
     {
         delete m_timer;
+        if (m_projection != nullptr)
+        {
+            delete m_projection;
+        }
     }
 
     void Application::pushLayer(Layer* t_layer)
@@ -51,6 +68,11 @@ namespace mgl
     {
         EventDispatcher dispatcher(e);
         dispatcher.dispatch<WindowCloseEvent>(MGL_BIND_FN(Application::onWindowClose));
+
+        if (m_projection != nullptr)
+        {
+            m_projection->onEvent(e);
+        }
 
         // * propagate the event down the layer stack
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
@@ -84,6 +106,13 @@ namespace mgl
                 {
                     layer->onUpdate();
                 }
+
+                m_imGuiLayer->begin();
+                for (Layer *layer : m_layerStack)
+                {
+                    layer->onImGuiRender();
+                }
+                m_imGuiLayer->end();
 
                 m_window->onUpdate();
 

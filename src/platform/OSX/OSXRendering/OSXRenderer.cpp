@@ -3,11 +3,15 @@
 #include "OSXRendererDataType.hpp"
 #include "OSXRendererPrimativeType.hpp"
 #include "OSXErrorCheck.hpp"
+#include <mgl/core/application.hpp>
 
 #ifdef MGL_PLATFORM_OSX
 
 namespace mgl
 {
+    const std::string OSXRenderer::PROJECTION_UNIFORM_NAME = "u_projection";
+    const std::string OSXRenderer::VIEW_UNIFORM_NAME = "u_view";
+
     Renderer* Renderer::create(const rendererProps& t_props)
     {
         return new OSXRenderer(t_props);
@@ -52,6 +56,8 @@ namespace mgl
 
         // * init shader
         m_shader = new OSXShader(m_options.m_vertexShaderPath, m_options.m_fragmentShaderPath, m_options.m_geometryShaderPath);
+        m_shader->addUniform(PROJECTION_UNIFORM_NAME);
+        m_shader->addUniform(VIEW_UNIFORM_NAME);
     }
 
     void OSXRenderer::draw()
@@ -80,6 +86,13 @@ namespace mgl
         }
 
         m_shader->useShader();
+
+        if (Application::getProjection() != nullptr)
+        {
+            m_shader->setUniformMatrix4fv(PROJECTION_UNIFORM_NAME, Application::getProjection()->getProjection());
+        }
+
+        m_shader->setUniformMatrix4fv(VIEW_UNIFORM_NAME, m_camera);
 
         // * TODO: bind textures here
         // * TODO: bind UBOs here
@@ -145,6 +158,57 @@ namespace mgl
         // * delete shader
         delete m_shader;
     }
+
+    void OSXRenderer::addUniform(std::string t_uniformId)
+    {
+        m_shader->addUniform(t_uniformId);
+    }
+
+    void OSXRenderer::setUniform1i(std::string t_uniformId, int t_val)
+    {
+        m_shader->setUniform1i(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform1f(std::string t_uniformId, float t_val)
+    {
+        m_shader->setUniform1f(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform2i(std::string t_uniformId, glm::ivec2 t_val)
+    {
+        m_shader->setUniform2i(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform2f(std::string t_uniformId, glm::vec2 t_val)
+    {
+        m_shader->setUniform2f(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform3i(std::string t_uniformId, glm::ivec3 t_val)
+    {
+        m_shader->setUniform3i(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform3f(std::string t_uniformId, glm::vec3 t_val)
+    {
+        m_shader->setUniform3f(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform4i(std::string t_uniformId, glm::ivec4 t_val)
+    {
+        m_shader->setUniform4i(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUniform4f(std::string t_uniformId, glm::vec4 t_val)
+    {
+        m_shader->setUniform4f(t_uniformId, t_val);
+    }
+
+    void OSXRenderer::setUnifromMatrix4fv(std::string t_uniformId, glm::mat4 t_val)
+    {
+        m_shader->setUniformMatrix4fv(t_uniformId, t_val);
+    }
+
 }
 
 #endif

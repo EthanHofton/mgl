@@ -13,16 +13,19 @@ namespace mgl
     public:
 
         // * public constrcutor passing in the mouse possition
-        MouseMovedEvent(glm::vec2 t_pos) : m_pos(t_pos) {}
+        MouseMovedEvent(glm::vec2 t_pos, glm::vec2 t_dpos) : m_pos(t_pos), m_dpos(t_dpos) {}
 
         // * event mouse position getter
         inline glm::vec2 getPos() const { return m_pos; }
+
+        // * event mouse position getter
+        inline glm::vec2 getDeltaPos() const { return m_dpos; }
 
         // * to string implimenation
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "MouseMovedEvent: {" << m_pos.x << ", " << m_pos.y << "}";
+            ss << "MouseMovedEvent: {" << m_pos.x << ", " << m_pos.y << "}, {" << m_dpos.x << ", " << m_dpos.y << "}";
             return ss.str();
         }
 
@@ -38,6 +41,9 @@ namespace mgl
 
         // * store the event mouse pos
         glm::vec2 m_pos;
+
+        // * store the event mouse delta pos
+        glm::vec2 m_dpos;
     };
 
     // * MouseScrolledEvent implimentation

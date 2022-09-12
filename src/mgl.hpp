@@ -34,4 +34,14 @@
 // * renderer
 #include "renderer/renderer.hpp"
 
+// * ecs
+#include "ecs/entity.hpp"
+
+// * ecs-components
+#include "ecs/components/modelIndices.hpp"
+#include "ecs/components/modelPoints.hpp"
+#include "ecs/components/transform.hpp"
+#include "ecs/components/camera3D.hpp"
+#include "ecs/components/camera2D.hpp"
+
 #endif

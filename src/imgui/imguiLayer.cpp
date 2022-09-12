@@ -14,21 +14,46 @@ namespace mgl
 
     ImGuiLayer::~ImGuiLayer() {}
 
-    void ImGuiLayer::onUpdate()
+    void ImGuiLayer::onAttach()
     {
+        ImGui::CreateContext();
+        ImGui::StyleColorsDark();
+
         ImGuiIO& io = ImGui::GetIO();
-        Application& app = Application::get();
-        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
+        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-        io.DeltaTime = Application::getTimer().getDeltaTime();
+        io.KeyMap[ImGuiKey_Tab] = MGL_KEY_TAB;
+        io.KeyMap[ImGuiKey_LeftArrow] = MGL_KEY_LEFT;
+        io.KeyMap[ImGuiKey_RightArrow] = MGL_KEY_RIGHT;
+        io.KeyMap[ImGuiKey_UpArrow] = MGL_KEY_UP;
+        io.KeyMap[ImGuiKey_DownArrow] = MGL_KEY_DOWN;
+        io.KeyMap[ImGuiKey_PageUp] = MGL_KEY_PAGE_UP;
+        io.KeyMap[ImGuiKey_PageDown] = MGL_KEY_PAGE_DOWN;
+        io.KeyMap[ImGuiKey_Home] = MGL_KEY_HOME;
+        io.KeyMap[ImGuiKey_End] = MGL_KEY_END;
+        io.KeyMap[ImGuiKey_Insert] = MGL_KEY_INSERT;
+        io.KeyMap[ImGuiKey_Delete] = MGL_KEY_DELETE;
+        io.KeyMap[ImGuiKey_Backspace] = MGL_KEY_BACKSPACE;
+        io.KeyMap[ImGuiKey_Space] = MGL_KEY_SPACE;
+        io.KeyMap[ImGuiKey_Enter] = MGL_KEY_ENTER;
+        io.KeyMap[ImGuiKey_Escape] = MGL_KEY_ESCAPE;
+        io.KeyMap[ImGuiKey_A] = MGL_KEY_A;
+        io.KeyMap[ImGuiKey_C] = MGL_KEY_C;
+        io.KeyMap[ImGuiKey_V] = MGL_KEY_V;
+        io.KeyMap[ImGuiKey_X] = MGL_KEY_X;
+        io.KeyMap[ImGuiKey_Y] = MGL_KEY_Y;
+        io.KeyMap[ImGuiKey_Z] = MGL_KEY_Z;
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui::NewFrame();
+        ImGui::StyleColorsDark();
+        ImGui_ImplOpenGL3_Init("#version 410");
+    }
 
-        draw();
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    void ImGuiLayer::onDetach()
+    {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui::DestroyContext();
     }
 
     void ImGuiLayer::onEvent(Event &e)
@@ -42,6 +67,23 @@ namespace mgl
         eventDispatcher.dispatch<MouseMovedEvent>(MGL_BIND_FN(ImGuiLayer::onMouseMove));
         eventDispatcher.dispatch<MouseScrolledEvent>(MGL_BIND_FN(ImGuiLayer::onMouseScroll));
         eventDispatcher.dispatch<WindowResizeEvent>(MGL_BIND_FN(ImGuiLayer::onWindowResize));
+    }
+
+    void ImGuiLayer::begin()
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        Application& app = Application::get();
+        io.DisplaySize = ImVec2(app.getWindow().getSize().x, app.getWindow().getSize().y);
+        io.DeltaTime = Application::getTimer().getDeltaTime();
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui::NewFrame();
+    }
+
+    void ImGuiLayer::end()
+    {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
     bool ImGuiLayer::onKeyPressed(KeyPressedEvent& e)
@@ -117,45 +159,5 @@ namespace mgl
         io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 
         return false;
-    }
-
-
-    void ImGuiLayer::onAttach()
-    {
-        ImGui::CreateContext();
-        ImGui::StyleColorsDark();
-
-        ImGuiIO& io = ImGui::GetIO();
-        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-
-        io.KeyMap[ImGuiKey_Tab] = MGL_KEY_TAB;
-        io.KeyMap[ImGuiKey_LeftArrow] = MGL_KEY_LEFT;
-        io.KeyMap[ImGuiKey_RightArrow] = MGL_KEY_RIGHT;
-        io.KeyMap[ImGuiKey_UpArrow] = MGL_KEY_UP;
-        io.KeyMap[ImGuiKey_DownArrow] = MGL_KEY_DOWN;
-        io.KeyMap[ImGuiKey_PageUp] = MGL_KEY_PAGE_UP;
-        io.KeyMap[ImGuiKey_PageDown] = MGL_KEY_PAGE_DOWN;
-        io.KeyMap[ImGuiKey_Home] = MGL_KEY_HOME;
-        io.KeyMap[ImGuiKey_End] = MGL_KEY_END;
-        io.KeyMap[ImGuiKey_Insert] = MGL_KEY_INSERT;
-        io.KeyMap[ImGuiKey_Delete] = MGL_KEY_DELETE;
-        io.KeyMap[ImGuiKey_Backspace] = MGL_KEY_BACKSPACE;
-        io.KeyMap[ImGuiKey_Space] = MGL_KEY_SPACE;
-        io.KeyMap[ImGuiKey_Enter] = MGL_KEY_ENTER;
-        io.KeyMap[ImGuiKey_Escape] = MGL_KEY_ESCAPE;
-        io.KeyMap[ImGuiKey_A] = MGL_KEY_A;
-        io.KeyMap[ImGuiKey_C] = MGL_KEY_C;
-        io.KeyMap[ImGuiKey_V] = MGL_KEY_V;
-        io.KeyMap[ImGuiKey_X] = MGL_KEY_X;
-        io.KeyMap[ImGuiKey_Y] = MGL_KEY_Y;
-        io.KeyMap[ImGuiKey_Z] = MGL_KEY_Z;
-
-        ImGui_ImplOpenGL3_Init("#version 410");
-    }
-
-    void ImGuiLayer::onDetach()
-    {
-
     }
 }

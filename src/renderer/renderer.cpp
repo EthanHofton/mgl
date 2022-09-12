@@ -70,6 +70,40 @@ namespace mgl
         m_indiceDataPointer += t_indiceSizeBytes;
     }
 
+    void Renderer::pushEntity(Entity t_entity)
+    {
+        if (!t_entity.hasComponent<ModelIndices>())
+        {
+            MGL_CORE_ERROR("Entity must contain model indices");
+            return;
+        }
+
+        // * before, update model data points if contains a transform
+        if (t_entity.hasComponent<Transform>() && t_entity.hasComponent<ModelPoints>())
+        {
+            auto& transform = t_entity.getComponent<Transform>();
+            auto& model = t_entity.getComponent<ModelPoints>();
+
+            for (int i = 0; i < model.m_worldVertices.size(); i++)
+            {
+                glm::vec4 worldPoint = glm::vec4(model.m_localVertices[i], 1.0f);
+                worldPoint = transform.getTransform() * worldPoint;
+                model.m_worldVertices[i] = glm::vec3(worldPoint);
+            }
+        }
+
+        int verticeDataSize = t_entity.getDrawableDataSize();
+        void *verticeData = malloc(verticeDataSize);
+        t_entity.getDrawableData(verticeData);
+
+        int indicieDataSize = t_entity.getComponent<ModelIndices>().m_indices.size() * sizeof(unsigned int);
+        void* indicieData = (void*)&(t_entity.getComponent<ModelIndices>().m_indices[0]);
+
+        pushData(verticeData, verticeDataSize, indicieData, indicieDataSize);
+
+        free(verticeData);
+    }
+
     void Renderer::cleanBuffers()
     {
         // * reset buffer pointers

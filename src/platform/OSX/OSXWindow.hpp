@@ -35,6 +35,9 @@ namespace mgl
         // * check vsync function implimentation
         bool isVSync() const override;
         // * get the event call back
+        virtual void setRelativeMouseMouse(bool t_enabled) override;
+        // * check relatice mouse mode
+        virtual bool isRelativeMouseMode() override;
 
         virtual inline void* getNativeWindow() const override { return (void*)m_window; }
 
@@ -60,6 +63,12 @@ namespace mgl
             glm::vec2 m_size;
             // * store weather the window should have vsync enabled
             bool m_vsync;
+            // * relative mouse mode
+            bool m_relativeMouseMode;
+
+            // * store the last mouse pos
+            glm::vec2 m_lastMousePos;
+            bool m_firstMouseMove;
 
             // * store the window event callback function
             eventCallback m_eventCallback;

@@ -125,6 +125,12 @@ namespace mgl
 
         USE_SHADER_UNIFORM_MAP(m_uniform4iMap, glUniform4i, val.second.x, val.second.y, val.second.z, val.second.w)
         USE_SHADER_UNIFORM_MAP(m_uniform4fMap, glUniform4f, val.second.x, val.second.y, val.second.z, val.second.w)
+
+        for (auto val : m_uniformMatrix4fvMap)
+        {
+            unsigned int uniformLocation = getUniformLocation(val.first);
+            glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &val.second[0][0]);
+        }
     }
 
     unsigned int OSXShader::getUniformLocation(std::string t_uniformId)
@@ -180,6 +186,10 @@ namespace mgl
         m_uniform4fMap[t_uniformId] = t_val;
     }
 
+    void OSXShader::setUniformMatrix4fv(std::string t_uniformId, glm::mat4 t_val)
+    {
+        m_uniformMatrix4fvMap[t_uniformId] = t_val;
+    }
 }
 
 #endif

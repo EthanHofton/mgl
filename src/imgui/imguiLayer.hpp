@@ -15,12 +15,12 @@ namespace mgl
         ImGuiLayer();
         ~ImGuiLayer();
 
-        void onUpdate() override;
         void onEvent(Event& e) override;
         void onAttach() override;
         void onDetach() override;
 
-        inline virtual void draw() {}
+        void begin();
+        void end();
 
     private:
 

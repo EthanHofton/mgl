@@ -51,6 +51,10 @@ ifeq ($(wildcard include/glm/.*),)
 	@echo creating soft link include/glm
 	ln -s -f "$(shell pwd)"/lib/glm/glm "$(shell pwd)"/include/glm
 endif
+ifeq ($(wildcard include/entt/.*),)
+	@echo creating soft link include/entt
+	ln -s -f "$(shell pwd)"/lib/entt/src/entt "$(shell pwd)"/include/entt
+endif
 ifeq ($(wildcard lib/glfw/bin/.*),)
 	@echo building glfw
 	cd lib/glfw/ && mkdir bin && cd bin && cmake .. && make all
