@@ -8,13 +8,6 @@
 
 namespace mgl
 {
-    struct EntityCallbackFunctions
-    {
-        std::function<void(void*)> getData;
-        std::function<int()> getDataSize;
-        std::function<int()> getStride;
-    };
-
     class Renderer;
     class Entity
     {
@@ -43,7 +36,7 @@ namespace mgl
             funcs.getDataSize = std::bind(t_sizeGetter, component);
             funcs.getStride = std::bind(t_strideGetter, component);
 
-            m_getters.push_back(funcs);
+            m_scene->m_entityGetters[m_entity].push_back(funcs);
             return *component;
         }
 
@@ -54,7 +47,7 @@ namespace mgl
         }
 
         template<typename _componentType>
-        bool hasComponent()
+        bool hasComponent() const
         {
             return m_scene->m_registery.all_of<_componentType*>(m_entity);
         }
@@ -89,7 +82,6 @@ namespace mgl
         int getDrawableDataSize();
         void getDrawableData(void* m_data);
 
-        std::vector<EntityCallbackFunctions> m_getters;
         entt::entity m_entity;
         Scene *m_scene = nullptr;
 

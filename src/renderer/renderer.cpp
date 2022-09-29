@@ -74,6 +74,11 @@ namespace mgl
     {
         if (!t_entity.hasComponent<ModelIndices>())
         {
+            if (t_entity.getDrawableDataSize() == 0)
+            {
+                return;
+            }
+            
             MGL_CORE_ERROR("Entity must contain model indices");
             return;
         }
@@ -84,11 +89,16 @@ namespace mgl
             auto& transform = t_entity.getComponent<Transform>();
             auto& model = t_entity.getComponent<ModelPoints>();
 
-            for (int i = 0; i < model.m_worldVertices.size(); i++)
+            if (transform.updated() || model.m_updated)
             {
-                glm::vec4 worldPoint = glm::vec4(model.m_localVertices[i], 1.0f);
-                worldPoint = transform.getTransform() * worldPoint;
-                model.m_worldVertices[i] = glm::vec3(worldPoint);
+                glm::mat4 transformMat = transform.getTransform();
+                for (int i = 0; i < model.m_worldVertices.size(); i++)
+                {
+                    glm::vec4 worldPoint = glm::vec4(model.m_localVertices[i], 1.0f);
+                    worldPoint = transformMat * worldPoint;
+                    model.m_worldVertices[i] = glm::vec3(worldPoint);
+                }
+                model.m_updated = false;
             }
         }
 
@@ -99,9 +109,25 @@ namespace mgl
         int indicieDataSize = t_entity.getComponent<ModelIndices>().m_indices.size() * sizeof(unsigned int);
         void* indicieData = (void*)&(t_entity.getComponent<ModelIndices>().m_indices[0]);
 
+
         pushData(verticeData, verticeDataSize, indicieData, indicieDataSize);
 
+
         free(verticeData);
+
+    }
+
+    void Renderer::pushCamera(Entity t_camera)
+    {
+        if (t_camera.hasComponent<Camera3D>())
+        {
+            m_camera = t_camera.getComponent<Camera3D>().getView();
+        }
+        
+        if (t_camera.hasComponent<Camera2D>())
+        {
+            m_camera = t_camera.getComponent<Camera2D>().getView();
+        }
     }
 
     void Renderer::cleanBuffers()

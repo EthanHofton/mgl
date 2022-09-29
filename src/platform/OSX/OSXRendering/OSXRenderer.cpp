@@ -67,7 +67,6 @@ namespace mgl
         // * check if the buffer was resized
         // * if resized, resize the array buffer
         // * if not, update the subdata of the array
-
         if (bufferResized())
         {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -111,9 +110,6 @@ namespace mgl
         {
             glEnable(GL_CULL_FACE);
         }
-
-        std::vector<unsigned int> indicies((unsigned int*)(m_indiceData), (unsigned int*)((char *)m_indiceData + m_indiceDataPointer));
-        std::vector<unsigned int> vertices((float*)(m_verticeData), (float*)((char *)m_verticeData + m_verticeDataPointer));
 
         // * draw elements
         glDrawElements(MGLPrimativeType2GL(m_options.m_primativeType), (int)m_indiceDataPointer / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
@@ -209,6 +205,25 @@ namespace mgl
         m_shader->setUniformMatrix4fv(t_uniformId, t_val);
     }
 
+    void OSXRenderer::setWireframe(bool t_enabled)
+    {
+        m_options.m_wireframeMode = t_enabled;
+    }
+
+    bool OSXRenderer::isWireframe()
+    {
+        return m_options.m_wireframeMode;
+    }
+
+    void OSXRenderer::setFaceCulling(bool t_enabled)
+    {
+        m_options.m_cullFaceMode = t_enabled;
+    }
+
+    bool OSXRenderer::isFaceCulling()
+    {
+        return m_options.m_cullFaceMode;
+    }
 }
 
 #endif

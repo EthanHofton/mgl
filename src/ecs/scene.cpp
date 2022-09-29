@@ -1,12 +1,13 @@
 #include "entity.hpp"
 
 #include <mgl/ecs/components/camera3D.hpp>
+#include <mgl/ecs/components/UUID.hpp>
+#include <mgl/ecs/components/transform.hpp>
 
 namespace mgl
 {
     Scene::Scene()
     {
-
     }
 
     Scene::~Scene()
@@ -16,7 +17,9 @@ namespace mgl
 
     Entity Scene::createEntity()
     {
-        return Entity(m_registery.create(), this);
+        Entity e = Entity(m_registery.create(), this);
+        e.addComponent<UUID>();
+        return e;
     }
 
     void Scene::destroyEntity(Entity entity)

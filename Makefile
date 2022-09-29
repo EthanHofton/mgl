@@ -12,10 +12,14 @@ CXXFLAGS += -DMGL_ENABLE_ASSERTS
 
 # dynamicly link to GLEW
 LDFLAGS = -Llib/glew/lib/ -lGLEW.2.2.0 -rpath "$(shell pwd)"/lib/glew/lib/
+# dynamicly link to assimp
+LDFLAGS += -Llib/assimp/bin/ -lassimp.5.2.4 -rpath "$(shell pwd)"/lib/assimp/bin/
 # statically link to glfw
 LDFLAGS += -Llib/glfw/bin/src/ -lglfw3
 # statically link to imgui
 LDFLAGS += -Llib/imgui/bin/ -limgui
+# statically link to bullet
+
 # additional framework dependencies
 LDFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 
@@ -69,7 +73,18 @@ ifeq ($(wildcard include/imgui/.*),)
 	@echo creating soft link include/imgui
 	ln -s -f "$(shell pwd)"/lib/imgui/include/imgui "$(shell pwd)"/include/imgui
 endif
-
+ifeq ($(wildcard include/assimp/.*),)
+	@echo creating imgui static lib
+	cd lib/assimp && cmake CMakeLists.txt && cmake --build . && make
+	@echo creating soft link include/assimp
+	ln -s -f "$(shell pwd)"/lib/assimp/include/assimp "$(shell pwd)"/include/assimp
+endif
+ifeq ($(wildcard include/bullet3/.*),)
+	@echo creating bullet3 static lib
+	cd lib/bullet3 && cmake CMakeLists.txt && cmake --build .
+	@echo creating soft link include/bullet3
+	ln -s -f "$(shell pwd)"/lib/bullet3/src/ "$(shell pwd)"/include/bullet3
+endif
 ifeq ($(wildcard include/mgl/.*),)
 	@echo creating soft link include/mgl
 	ln -s -f "$(shell pwd)"/src/ "$(shell pwd)"/include/mgl

@@ -52,26 +52,19 @@ namespace mgl
 
         // * push data methods
         void pushData(void* t_vertices, int t_verticeSizeBytes, void* t_indices, int t_indiceSizeBytes);
-
         // * push entity
         void pushEntity(Entity t_entity);
-
         // * push camera
-        void pushCamera(Entity t_camera)
-        {
-            if (t_camera.hasComponent<Camera3D>())
-            {
-                m_camera = t_camera.getComponent<Camera3D>().getView();
-            }
-            
-            if (t_camera.hasComponent<Camera2D>())
-            {
-                m_camera = t_camera.getComponent<Camera2D>().getView();
-            }
-        }
+        void pushCamera(Entity t_camera);
 
         // * to be implamented per platform
         static Renderer* create(const rendererProps& t_props);
+
+        virtual void setWireframe(bool t_enabled) = 0;
+        virtual bool isWireframe() = 0;
+
+        virtual void setFaceCulling(bool t_enabled) = 0;
+        virtual bool isFaceCulling() = 0;
 
         // * uniform setting and getting
         // * TO BE IMPLAMENTED PER PLATFORM

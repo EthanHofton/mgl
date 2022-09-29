@@ -7,9 +7,13 @@ namespace mgl
     int Entity::getDrawableDataSize()
     {
         int size = 0;
-        for (auto callback : m_getters)
+
+        if (m_scene->m_entityGetters.find(m_entity) != m_scene->m_entityGetters.end())
         {
-            size += callback.getDataSize();
+            for (auto callback : m_scene->m_entityGetters[m_entity])
+            {
+                size += callback.getDataSize();   
+            }
         }
 
         return size;
@@ -17,46 +21,49 @@ namespace mgl
 
     void Entity::getDrawableData(void* t_data)
     {
-        struct componentData
+        if (m_scene->m_entityGetters.find(m_entity) != m_scene->m_entityGetters.end())
         {
-            void* data;
-            int dataSize;
-            int dataStride;
-        };
-
-        int verticeStide = 0;
-        std::vector<componentData> compoentsData;
-        for (auto callback : m_getters)
-        {
-            // * init temp data buffer
-            int dataSize = callback.getDataSize();
-            int dataStride = callback.getStride();
-            void *data = malloc(dataSize);
-
-            callback.getData(data);
-
-            componentData c;
-            c.data = data;
-            c.dataSize = dataSize;
-            c.dataStride = dataStride;
-            compoentsData.push_back(c);
-
-            verticeStide += dataStride;
-        }
-
-        int dataOffset = 0;
-        for (componentData component : compoentsData)
-        {
-            int passes = 0;
-            for (int i = 0; i < component.dataSize; i+=component.dataStride)
+            struct componentData
             {
-                memcpy((void*)((char*)t_data+(verticeStide*passes)+dataOffset), (void*)((char*)component.data + i), component.dataStride);
-                std::vector<float> v1 ((float*)t_data, (float*)((char*)t_data + getDrawableDataSize()));
-                passes++;
+                void* data;
+                int dataSize;
+                int dataStride;
+            };
+
+            int verticeStide = 0;
+            std::vector<componentData> compoentsData;
+            for (auto callback : m_scene->m_entityGetters[m_entity])
+            {
+                // * init temp data buffer
+                int dataSize = callback.getDataSize();
+                int dataStride = callback.getStride();
+                void *data = malloc(dataSize);
+
+                callback.getData(data);
+
+                componentData c;
+                c.data = data;
+                c.dataSize = dataSize;
+                c.dataStride = dataStride;
+                compoentsData.push_back(c);
+
+                verticeStide += dataStride;
+
             }
 
-            dataOffset += component.dataStride;
-            free(component.data);
+            int dataOffset = 0;
+            for (componentData component : compoentsData)
+            {
+                int passes = 0;
+                for (int i = 0; i < component.dataSize; i+=component.dataStride)
+                {
+                    memcpy((void*)((char*)t_data+(verticeStide*passes)+dataOffset), (void*)((char*)component.data + i), component.dataStride);
+                    passes++;
+                }
+
+                dataOffset += component.dataStride;
+                free(component.data);
+            }
         }
     }
 }

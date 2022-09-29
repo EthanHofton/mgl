@@ -18,8 +18,8 @@ namespace mgl
         // * window properties constructor
         // * defualt args:
         // *    - window title: "untitled project"
-        // *    - window size: {1280px, 620px}
-        windowProps(const std::string& t_title = "untitled project", glm::vec2 t_size = {1280, 620}) : 
+        // *    - window size: from config
+        windowProps(const std::string& t_title = "untitled project", glm::vec2 t_size = {Config::instance()->getWidth(), Config::instance()->getHeight()}) : 
         m_title(t_title), m_size(t_size) {}
     };
 

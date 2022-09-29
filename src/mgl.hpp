@@ -36,6 +36,7 @@
 
 // * ecs
 #include "ecs/entity.hpp"
+#include "ecs/objLoader.hpp"
 
 // * ecs-components
 #include "ecs/components/modelIndices.hpp"
@@ -43,5 +44,9 @@
 #include "ecs/components/transform.hpp"
 #include "ecs/components/camera3D.hpp"
 #include "ecs/components/camera2D.hpp"
+#include "ecs/components/color.hpp"
+#include "ecs/components/textureCoordinates.hpp"
+#include "ecs/components/UUID.hpp"
+#include "ecs/components/tag.hpp"
 
 #endif

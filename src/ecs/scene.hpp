@@ -2,11 +2,17 @@
 #define scene_hpp
 
 #include <entt/entt.hpp>
-#include "components/transform.hpp"
 #include <mgl/events/event.hpp>
 
 namespace mgl
 {
+    struct EntityCallbackFunctions
+    {
+        std::function<void(void*)> getData;
+        std::function<int()> getDataSize;
+        std::function<int()> getStride;
+    };
+
     class Entity;
     class Scene
     {
@@ -27,6 +33,7 @@ namespace mgl
     private:
 
         entt::registry m_registery;
+        std::map<entt::entity, std::vector<EntityCallbackFunctions>> m_entityGetters;
 
         friend class Entity;
     };

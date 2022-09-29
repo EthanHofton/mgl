@@ -36,12 +36,10 @@ namespace mgl
         void enable()  { m_disabled = false; }
         bool isDisabled() { return m_disabled; }
 
-        glm::vec3 m_camPos;
+        glm::vec3 m_camPos = {0,0,0};
 
     private:
-
-        bool m_keyDown = false;
-        glm::vec3 m_trans = {0,0,0};
+    
         bool m_disabled = false;
     };
 }

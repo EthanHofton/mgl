@@ -17,6 +17,7 @@ namespace mgl
         void reset();
         inline double getDeltaTime() { return m_deltaTime.count(); }
         inline long int getElapsedTime() { return (long int)m_elepsedTime; }
+        inline double getElapsedTimed() { return m_elepsedTime; }
         
         inline double getTimeScale() { return m_timeScale; }
         inline void timeScale(double t_t) { m_timeScale = t_t; }

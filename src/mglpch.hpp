@@ -25,6 +25,9 @@
 
 // * logger
 #include <mgl/util/util.hpp>
+#include <mgl/util/color.hpp>
+#include <mgl/util/math.hpp>
+#include <mgl/util/random.hpp>
 #include <mgl/core/core.hpp>
 
 #endif

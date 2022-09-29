@@ -77,56 +77,48 @@ namespace mgl
 
     void Camera3D::onUpdate()
     {
-        if (Input::isKeyReleased(MGL_KEY_W) || Input::isKeyReleased(MGL_KEY_A) || Input::isKeyReleased(MGL_KEY_S) || Input::isKeyReleased(MGL_KEY_D))
-        {
-            m_keyDown = false;
-        }
-
         if (Input::isKeyPressed(MGL_KEY_S))
         {
-            m_keyDown = true;
-            m_trans = -m_moveSpeed * m_front * (float)Application::getTimer().getDeltaTime();
+            glm::vec3 trans;
+            trans = -m_moveSpeed * m_front * (float)Application::getTimer().getDeltaTime();
+            trans.y = 0;
+            m_camPos += trans;
         }
 
         if (Input::isKeyPressed(MGL_KEY_A))
         {
-            m_keyDown = true;
-            m_trans = -m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
+            glm::vec3 trans;
+            trans = -m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
+            m_camPos += trans;
         }
 
         if (Input::isKeyPressed(MGL_KEY_D))
         {
-            m_keyDown = true;
-            m_trans = m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
+            glm::vec3 trans;
+            trans = m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
+            m_camPos += trans;
         }
 
         if (Input::isKeyPressed(MGL_KEY_W))
         {
-            m_keyDown = true;
-            m_trans = m_moveSpeed * m_front * (float)Application::getTimer().getDeltaTime();
+            glm::vec3 trans;
+            trans = m_moveSpeed * m_front * (float)Application::getTimer().getDeltaTime();
+            trans.y = 0;
+            m_camPos += trans;
         }
 
-        if (Input::isKeyPressed(MGL_KEY_S))
+        if (Input::isKeyPressed(MGL_KEY_SPACE))
         {
-            m_keyDown = true;
-            m_trans = -m_moveSpeed * m_front * (float)Application::getTimer().getDeltaTime();
+            glm::vec3 trans;
+            trans = {0, m_moveSpeed * (float)Application::getTimer().getDeltaTime(), 0};
+            m_camPos += trans;
         }
 
-        if (Input::isKeyPressed(MGL_KEY_A))
+        if (Input::isKeyPressed(MGL_KEY_LEFT_SHIFT))
         {
-            m_keyDown = true;
-            m_trans = -m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
-        }
-
-        if (Input::isKeyPressed(MGL_KEY_D))
-        {
-            m_keyDown = true;
-            m_trans = m_moveSpeed * m_right * (float)Application::getTimer().getDeltaTime();
-        }
-
-        if (m_keyDown && !m_disabled)
-        {
-            m_camPos += m_trans;
+            glm::vec3 trans;
+            trans = {0, -m_moveSpeed * (float)Application::getTimer().getDeltaTime(), 0};
+            m_camPos += trans;
         }
     }
 }

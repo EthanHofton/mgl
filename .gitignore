@@ -5,3 +5,4 @@ bin/
 include/GL/
 include/
 src/mglpch.hpp.gch
+*.DS_Store

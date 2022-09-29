@@ -30,6 +30,12 @@ namespace mgl
         virtual void setUniform4f(std::string t_uniformId, glm::vec4 t_val) override;
         virtual void setUnifromMatrix4fv(std::string t_uniformId, glm::mat4 t_val) override;
 
+        virtual void setWireframe(bool t_enabled) override;
+        virtual bool isWireframe() override;
+
+        virtual void setFaceCulling(bool t_enabled) override;
+        virtual bool isFaceCulling() override;
+
         static const std::string PROJECTION_UNIFORM_NAME;
         static const std::string VIEW_UNIFORM_NAME;
 
