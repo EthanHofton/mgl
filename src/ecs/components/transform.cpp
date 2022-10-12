@@ -59,7 +59,7 @@ namespace mgl
         setUpdate(false);
         if (hasTransformParent())
         {
-            return getParentTransform().getTransformNoUpdate() * getTransformNoUpdate();
+            return getTransformNoUpdate() *  getParentTransform().getTransformNoUpdate();
         }
         else
         {
@@ -80,13 +80,20 @@ namespace mgl
         m_updated = t_updated;
         if (m_updated && hasTransformParent())
         {
-            getParentTransform().setUpdate(true);
+            for (auto child : m_children)
+            {
+                child->setUpdate(true);
+            }
         }
     }
 
     void Transform::setTransformParent(Entity t_parent)
     {
         m_parent = t_parent;
+        if (hasTransformParent())
+        {
+            getParentTransform().m_children.push_back(this);
+        }
     }
     
     const Entity& Transform::getTransformParent() const 
@@ -96,6 +103,11 @@ namespace mgl
 
     bool Transform::hasTransformParent() const
     {
+        if (m_parent.null())
+        {
+            return false;
+        }
+
         return m_parent.hasComponent<Transform>();
     }
 

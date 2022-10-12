@@ -77,12 +77,17 @@ namespace mgl
 			return !(*this == other);
 		}
 
+        bool null() const
+        {
+            return m_entity == entt::null;
+        }
+
     private:
 
         int getDrawableDataSize();
         void getDrawableData(void* m_data);
 
-        entt::entity m_entity;
+        entt::entity m_entity = entt::null;
         Scene *m_scene = nullptr;
 
         friend class Renderer;

@@ -50,6 +50,7 @@ namespace mgl
         glm::vec3 m_scale = { 1.0f, 1.0f, 1.0f };
 
         Entity m_parent;
+        std::vector<Transform*> m_children;
 
         bool m_updated = false;
     };
